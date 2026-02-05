@@ -1,7 +1,6 @@
-import csv
 #https://github.com/speedyapply/JobSpy?tab=readme-ov-file
 from jobspy import scrape_jobs
-import pandas as pd
+
 def find_jobs(serch)->list[dict]:
 
     site_names = ["Indeed", "LinkedIn"]
