@@ -16,8 +16,9 @@ cv_text =load_cv_text(my_cv_eng_path)
 search = """
 ("Data Scientist" OR "Data Engineer" OR "Machine Learning" OR "Deep Learning" OR "NLP" OR "Artificial Intelligence" OR "GenAI" OR "Big Data" OR "Python Developer")
 ("Junior" OR "Intern" OR "Staż" OR "Trainee" OR "Młodszy" OR "Praktyka" OR "Asystent" OR "Graduate")
--Senior -Lead -Manager -Principal -Architect -Kierownik -Dyrektor
+-Senior -B2B
 """
+search = search.replace("\n", " ").strip()
 jobs_list = find_jobs(search)
 
 # getting cv analizeed to evry job role

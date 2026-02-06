@@ -1,38 +1,61 @@
 #https://github.com/speedyapply/JobSpy?tab=readme-ov-file
+import pandas as pd
+import csv
+import os
 from jobspy import scrape_jobs
 
 def find_jobs(serch)->list[dict]:
 
     site_names = ["Indeed", "LinkedIn"]
 
-    jobs = scrape_jobs(
+    all_jobs = []
+
+    jobs_local = scrape_jobs(
         site_name=site_names,
         search_term=serch,
         location="Katowice",
         distance=10,
         is_remote=False,
-        results_wanted=100,
-        hours_old=24,
+        results_wanted=50,
+        hours_old=336,
         country_indeed='Poland',
         linkedin_fetch_description=True,
         description_format="markdown",
     )
-    print(f"Found {len(jobs)} jobs")
+    print(f"   ---> Znaleziono lokalnie: {len(jobs_local)}")
+    if not jobs_local.empty:
+        all_jobs.extend(jobs_local.to_dict(orient="records"))
 
+    jobs_remote = scrape_jobs(
+        site_name=site_names,
+        search_term=serch,
+        location="Poland",
+        is_remote=True,
+        results_wanted=50,
+        hours_old=168,
+        country_indeed='Poland',
+        linkedin_fetch_description=True,
+        description_format="markdown",
+    )
+    print(f"   ---> Znaleziono zdalnie: {len(jobs_remote)}")
+    if not jobs_remote.empty:
+        all_jobs.extend(jobs_remote.to_dict(orient="records"))
 
-    print(jobs["description"])
+    print(f"\n✅ Łącznie znaleziono unikalnych ofert: {len(all_jobs)}")
 
-    if not jobs.empty:
+    if all_jobs:
+        # To DataFrame to convert to json
+        df_all = pd.DataFrame(all_jobs)
+
+        # Remove duplicates
+        df_all = df_all.drop_duplicates(subset=['job_url'])
+
+        # Save to json file
         file_name = "jobs_for_ai.json"
-        # Saves to CSV
-        # jobs.to_csv(file_name, quoting=csv.QUOTE_NONNUMERIC, escapechar="\\", index=False)
-        # print(f"Zapisano dane do '{file_name}.csv'")
+        df_all.to_json(file_name, orient="records", indent=4, force_ascii=False)
+        print(f"💾 Zapisano wyniki do '{file_name}'")
 
-        # Saves to JSON
-        jobs.to_json(file_name, orient="records", indent=4, force_ascii=False)
-        print(f"Zapisano dane do '{file_name}'.")
-        return jobs.to_dict(orient="records")
-
+        return df_all.to_dict(orient="records")
     else:
-        print("Nie znaleziono ofert. Spróbuj zmienić parametry wyszukiwania.")
+        print("⚠️ Nie znaleziono żadnych ofert w obu krokach.")
         return []

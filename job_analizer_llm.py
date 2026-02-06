@@ -6,6 +6,9 @@ from langchain_core.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
 import json
 
+from pandas.io.common import file_path_to_url
+
+
 # load_dotenv()
 # GEMINI_API = os.getenv('GEMINI_API')
 
@@ -39,25 +42,25 @@ def analyze_jobs_with_ai(jobs_list:list[dict], cv_text:str) -> list[dict]:
     Wymagam odpowiedzi w CZYSTYM formacie JSON, zgodnym z poniższym schematem.
     Nie dodawaj żadnych wstępów ani znaczników markdown.
     
-    Pamiętaj aby podawać wszystkie odpowiedzi w języku polskim.
-    
     {{
         "match_score": 0-100 (jako liczba integer),
         "missing_skills": ["umiejętność 1", "umiejętność 2"],
-        "advice": "krótka porada max 3 zdania"
+        "advice": "krótka porada dotycząca tej oferty, max 3 zdania"
     }}
+    
+    Pamiętaj aby podawać wszystkie odpowiedzi w języku polskim jak "missing_skills" czy "advice".
     """
 
     prompt = ChatPromptTemplate.from_template(template)
     chain = prompt | llm
 
     analysis_results = []
-    print(f"\n Starting analyzing {len(jobs_list)} offers...\n")
+    print(f"\n Rozpoczynam analize {len(jobs_list)} ofert...\n")
 
     for index, job in enumerate(jobs_list):
         if not job.get('description'): continue
 
-        print(f"[{index + 1}] Analyzing: {job.get('title')}...")
+        print(f"[{index + 1}] Analizowanie: {job.get('title')}...")
 
 
         try:
@@ -88,7 +91,8 @@ def analyze_jobs_with_ai(jobs_list:list[dict], cv_text:str) -> list[dict]:
             print(f"   ---> Ocena: {score}/100 | Porada: {ai_data_dict.get('advice')}")
 
             # Save to json file
-            with open("job_analysis_results.json", "w", encoding="utf-8") as f:
+            file_path = os.path.join("Data", "job_analysis_results.json")
+            with open(file_path, "w", encoding="utf-8") as f:
                 json.dump(analysis_results, f, ensure_ascii=False, indent=4)
 
 
