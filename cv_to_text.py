@@ -1,6 +1,7 @@
 import os
 import re
 import pdfplumber
+from pathlib import Path
 
 def clean_text(text: str) -> str:
     if not text:
@@ -35,7 +36,9 @@ def load_cv_text(cv_path: str) -> str:
             return ""
 
         # save to txt file
-        txt_path = cv_path.rsplit('.', 1)[0] + '.txt'
+        data_dir = Path("Data")
+        data_dir.mkdir(exist_ok=True)
+        txt_path = data_dir / "cvText.txt"
         with open(txt_path, 'w', encoding='utf-8') as txt_file:
             txt_file.write(full_text)
         print(f"✅ CV text saved to '{txt_path}'")
