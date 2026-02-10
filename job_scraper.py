@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import requests
 from jobspy import scrape_jobs
+from other_job_scraper import scrape_other_sites
 
 DATA_FOLDER_PATH = "Data"
 HISTORY_FILE_PATH = os.path.join(DATA_FOLDER_PATH, "all_jobs_history.json")
@@ -104,6 +105,10 @@ def find_jobs(search:str, location:str = "Katowice", h_old:int = 24, remote:bool
     # load history of seen URLs
     seen_urls = _load_history_urls()
     all_jobs_list = []
+
+    #Selenium (JustJoinIT, NoFluffJobs, BulldogJob, TheProtocol) - local
+    selenium_jobs = scrape_other_sites(search, location, remote)
+    all_jobs_list.extend(selenium_jobs)
 
     # search for local jobs
     local_jobs = _perform_scrape(
