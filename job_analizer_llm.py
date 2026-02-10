@@ -12,6 +12,16 @@ from typing import List, Any
 load_dotenv()
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
+def _load_analysis_history(file_path: str) -> list:
+    if os.path.exists(file_path):
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if isinstance(data, list):
+                    return data
+        except (json.JSONDecodeError, ValueError):
+            print("⚠️ Plik historii uszkodzony. Tworzę nową historię.")
+    return []
 
 class JobAnalysis(BaseModel):
     match_score: int = Field(description="Ocena dopasowania oferty do CV w skali 0-100")
@@ -20,6 +30,8 @@ class JobAnalysis(BaseModel):
 
 def analyze_jobs_with_ai(jobs_list:list[dict], cv_text:str) -> list[Any] | None:
     CHAR_LIMIT = 8000
+
+    AI_response_history_path = os.path.join("Data", "job_analysis_results.json")
 
     llm = ChatGoogleGenerativeAI(
         model="gemini-3-flash-preview",
@@ -45,18 +57,31 @@ def analyze_jobs_with_ai(jobs_list:list[dict], cv_text:str) -> list[Any] | None:
     prompt = ChatPromptTemplate.from_template(template)
     chain = prompt | structured_llm # returns object of type JobAnalysis
 
-    analysis_results = []
-    print(f"\n Rozpoczynam analize {len(jobs_list)} ofert...\n")
+    analysis_results = _load_analysis_history(AI_response_history_path)
+    print(f"\n📚 Załadowano historię analiz AI: {len(analysis_results)} pozycji.")
+
+    seen_urls = {item.get('url') for item in analysis_results if item.get('url')}
+
+    print(f"\n🚀 Rozpoczynam analizę {len(jobs_list)} ofert...\n")
 
     for index, job in enumerate(jobs_list):
+
+        job_url = job.get('job_url')
+        job_title = job.get('title', 'Nieznane stanowisko')
+
+        # Check duplication based on job URL
+        if job_url in seen_urls:
+            print(f"[{index + 1}] ⏭️  Pominięto (już w historii): {job_title}")
+            continue
+
         # Download job description
         raw_description = job.get('description', '')
         if not raw_description:
+            print(f"[{index + 1}] ⚠️ Brak opisu dla: {job_title}")
             continue
 
-        print(f"[{index + 1}] Analizowanie: {job.get('title')}...")
+        print(f"[{index + 1}] 🤖 Analizowanie: {job_title}...")
 
-        #
         desc_len = len(raw_description)
 
         if desc_len > CHAR_LIMIT:
@@ -89,15 +114,16 @@ def analyze_jobs_with_ai(jobs_list:list[dict], cv_text:str) -> list[Any] | None:
                     "analysis": ai_data_dict
                 }
 
+                # add to results and seen urls
                 analysis_results.append(result)
+                seen_urls.add(job_url)
 
                 # Print summary
                 score = ai_data_dict.get('match_score', 0)
                 print(f"   ---> Ocena: {score}/100 | Porada: {ai_data_dict.get('advice')}")
 
                 # Save to json file
-                file_path = os.path.join("Data", "job_analysis_results.json")
-                with open(file_path, "w", encoding="utf-8") as f:
+                with open(AI_response_history_path, "w", encoding="utf-8") as f:
                     json.dump(analysis_results, f, ensure_ascii=False, indent=4)
 
                 success = True

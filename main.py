@@ -8,9 +8,12 @@ from cv_to_text import load_cv_text
 # https://github.com/speedyapply/JobSpy?tab=readme-ov-file
 
 # Loading CV text
-my_cv_eng_path = os.path.join("/", "Users", "sebastian", "Desktop", "praca", "SebastianWandzel.pdf")
+my_cv_eng_path_mac = os.path.join("/", "Users", "sebastian", "Desktop", "praca", "SebastianWandzel.pdf")
+my_cv_eng_path_pc = os.path.join("C:\\", "Users", "Sebastian", "Desktop", "SynologyDrive", "praca" , "SebastianWandzel.pdf")
+
+# "C:\Users\Sebastian\Desktop\SynologyDrive\praca\SebastianWandzelPOL.pdf"
 # my_cv_pol_path = os.path.join("/", "Users", "sebastian", "Desktop", "praca", "SebastianWandzelPOL.pdf")
-cv_text =load_cv_text(my_cv_eng_path)
+cv_text =load_cv_text(my_cv_eng_path_pc)
 
 # Finding job offers and returning to list of dicts
 search = """
