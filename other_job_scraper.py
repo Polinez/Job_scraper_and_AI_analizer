@@ -1,6 +1,5 @@
 import time
-import os
-import urllib.parse
+import re
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -13,7 +12,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 def _get_driver():
     """Konfiguruje i zwraca sterownik Chrome w trybie headless."""
     options = Options()
-    options.add_argument("--headless=new")
+    # options.add_argument("--headless=new") # Włącz dla wydajności (zakomentuj dla podglądu)
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")
@@ -41,18 +40,64 @@ def _scroll_page(driver, loops=10):
         pass
 
 
+# --- LOGIKA FILTROWANIA (STRICT MODE) ---
+
+def _parse_strict_query(search_str: str):
+    excludes = re.findall(r'-(\w+)', search_str)
+    excludes = [e.lower() for e in excludes]
+
+    raw_groups = re.findall(r'\((.*?)\)', search_str)
+    required_groups = []
+
+    if raw_groups:
+        for group in raw_groups:
+            keywords = [k.strip().replace('"', '').replace("'", "").lower() for k in group.split(" OR ")]
+            required_groups.append(keywords)
+    else:
+        clean_str = re.sub(r'-(\w+)', '', search_str)
+        keywords = [w.lower() for w in clean_str.split() if w not in ["AND", "OR", "(", ")", ""]]
+        if keywords:
+            required_groups.append(keywords)
+
+    return required_groups, excludes
+
+
+def _matches_strict_query(title: str, required_groups: list, excludes: list) -> bool:
+    title_lower = title.lower()
+
+    for bad_word in excludes:
+        if bad_word in title_lower: return False
+
+    for group in required_groups:
+        match_found_in_group = False
+        for keyword in group:
+            if keyword in title_lower:
+                match_found_in_group = True
+                break
+        if not match_found_in_group: return False
+
+    return True
+
+
+# --- POMOCNIK: CZY SZUKAMY JUNIORA? ---
+def _is_junior_search(required_groups):
+    junior_keywords = ["junior", "intern", "staż", "trainee", "młodszy", "assistant", "praktyka"]
+    for group in required_groups:
+        if any(k in junior_keywords for k in group):
+            return True
+    return False
+
+
 # --- POBIERANIE OPISÓW ---
 
 def _get_full_description(driver, url, site):
-    """Wchodzi w link oferty i pobiera pełny opis."""
     try:
         driver.get(url)
-        time.sleep(1.5)
+        time.sleep(1.0)
         soup = BeautifulSoup(driver.page_source, "html.parser")
         description_text = ""
 
         if site == "JustJoinIT":
-            # Szukanie największego bloku tekstu
             divs = soup.find_all("div")
             max_len = 0
             best_div = None
@@ -73,26 +118,27 @@ def _get_full_description(driver, url, site):
                 description_text = desc_section.get_text(separator="\n", strip=True)
 
         elif site == "BulldogJob":
-            # BulldogJob trzyma opis w divie o id 'job-description' lub kontenerze tekstowym
-            desc_section = soup.find("div", id="job-description")
-            if not desc_section:
-                # Fallback: szukamy dużej sekcji wewnątrz kontenera
-                desc_section = soup.find("div", class_="text-sm")  # Częsta klasa w BDJ
-
+            desc_section = soup.find("div", id="job-description") or soup.find("div", class_="text-sm")
             if desc_section:
                 description_text = desc_section.get_text(separator="\n", strip=True)
 
         elif site == "TheProtocol":
-            # TheProtocol ma sekcję opisową zazwyczaj w sekcji "root"
-            # Szukamy sekcji z opisem (często section)
-            desc_section = soup.find("section", {"data-test": "section-description"})
-            if not desc_section:
-                # Szukamy po prostu dużego tekstu
-                article = soup.find("article")
-                if article: desc_section = article
-
+            desc_section = soup.find("section", {"data-test": "section-description"}) or soup.find("article")
             if desc_section:
                 description_text = desc_section.get_text(separator="\n", strip=True)
+
+        elif site == "Pracuj.pl":
+            sections = soup.find_all("div", attrs={"data-test": lambda x: x and x.startswith("section-")})
+            full_text = []
+            for sec in sections:
+                full_text.append(sec.get_text(separator="\n", strip=True))
+
+            if full_text:
+                description_text = "\n\n".join(full_text)
+            else:
+                main_div = soup.find("div", {"id": "offer-view"}) or soup.find("div", class_="offer-view")
+                if main_div:
+                    description_text = main_div.get_text(separator="\n", strip=True)
 
         return description_text if description_text else f"Brak opisu dla {site}."
 
@@ -101,60 +147,73 @@ def _get_full_description(driver, url, site):
         return ""
 
 
-# --- FILTROWANIE ---
-
-def _extract_keywords_from_search(search_str: str):
-    clean_str = search_str.replace("(", "").replace(")", "").replace('"', "")
-    words = clean_str.split()
-    excludes = [w[1:].lower() for w in words if w.startswith("-")]
-    keywords = [w.lower() for w in words if not w.startswith("-") and w not in ["OR", "AND", ""]]
-    return keywords, excludes
-
-
-def _matches_complex_query(title: str, keywords: list, excludes: list) -> bool:
-    title_lower = title.lower()
-    for bad_word in excludes:
-        if bad_word in title_lower: return False
-
-    # Jeśli brak słów kluczowych (puste), bierzemy wszystko co nie wykluczone
-    if not keywords: return True
-
-    for good_word in keywords:
-        if good_word in title_lower: return True
-    return False
-
-
-# --- SCRAPERY PORTALI ---
+# --- SCRAPERY ---
 
 class PolishSitesScraper:
-    def __init__(self, driver):
+    def __init__(self, driver, seen_urls=None):
         self.driver = driver
+        self.seen_urls = seen_urls if seen_urls else set()
 
-    def scrape_justjoinit(self, keywords, excludes, location, is_remote):
+    def _is_seen(self, url):
+        return url in self.seen_urls
+
+    # 1. Just Join IT (Zaktualizowane o radius)
+    def scrape_justjoinit(self, required_groups, excludes, location, is_remote):
         results = []
-        categories = ["python", "data", "artificial-intelligence"]
+        tech_keywords = required_groups[0] if required_groups else ["python", "data"]
+        is_junior = _is_junior_search(required_groups)
 
-        for cat in categories:
-            url = f"https://justjoin.it/all-locations/{cat}"
-            if is_remote: url += "?workplaceType=remote"
+        categories_to_check = set()
+        for kw in tech_keywords:
+            kw = kw.lower()
+            if "python" in kw: categories_to_check.add("python")
+            if any(x in kw for x in ["data", "sql", "analytics"]): categories_to_check.add("data")
+            if "java" in kw: categories_to_check.add("java")
+            if "net" in kw: categories_to_check.add("net")
+            if any(x in kw for x in ["ai", "learning", "ml", "nlp", "llm"]): categories_to_check.add("ai")
 
-            print(f"   🚀 [JustJoinIT] Skanowanie: '{cat}'...")
+        if not categories_to_check: categories_to_check = {"data", "python", "ai"}
+
+        for cat in categories_to_check:
+            base_url = "https://justjoin.it/job-offers"
+            path_loc = "all-locations" if (not location or is_remote) else location.lower()
+            url = f"{base_url}/{path_loc}/{cat}"
+
+            # Parametry zapytania
+            params = []
+
+            if is_remote:
+                params.append("workplaceType=remote")
+
+            if is_junior:
+                params.append("experience-level=junior")
+
+            # Radius 0 dla miast (chyba że szukamy zdalnie, wtedy radius nie ma sensu)
+            if not is_remote and location:
+                params.append("radius=0")
+
+            params.append("orderBy=DESC")
+            params.append("sortBy=published")
+
+            if params: url += "?" + "&".join(params)
+
+            print(f"   🚀 [JustJoinIT] Skanowanie: {url}")
             try:
                 self.driver.get(url)
                 time.sleep(2)
                 _scroll_page(self.driver)
                 soup = BeautifulSoup(self.driver.page_source, "html.parser")
-
                 candidates = []
                 for a_tag in soup.find_all("a", href=True):
                     if "/job-offer/" in a_tag['href']:
-                        title_tag = a_tag.find("h2") or a_tag.find("h3")
-                        title = title_tag.text if title_tag else a_tag.text
-                        if _matches_complex_query(title, keywords, excludes):
-                            candidates.append((title, "https://justjoin.it" + a_tag['href']))
+                        full_link = "https://justjoin.it" + a_tag['href']
+                        if self._is_seen(full_link): continue
+                        title = a_tag.text
+                        if _matches_strict_query(title, required_groups, excludes):
+                            candidates.append((title, full_link))
 
                 candidates = list(set(candidates))
-                print(f"      -> Znaleziono {len(candidates)} ofert.")
+                print(f"      -> Znaleziono: {len(candidates)}")
 
                 for title, link in candidates:
                     results.append({
@@ -166,17 +225,34 @@ class PolishSitesScraper:
                         "description": _get_full_description(self.driver, link, "JustJoinIT")
                     })
             except Exception as e:
-                print(f"   ❌ Błąd JJIT: {e}")
+                print(f"   ❌ Błąd JJIT ({cat}): {e}")
         return results
 
-    def scrape_nofluffjobs(self, keywords, excludes, location, is_remote):
+    # 2. No Fluff Jobs
+    def scrape_nofluffjobs(self, required_groups, excludes, location, is_remote):
         results = []
-        loc_url = location.lower() if not is_remote else "remote"
-        categories = ["python", "data", "artificial-intelligence"]
+        is_junior = _is_junior_search(required_groups)
 
-        for cat in categories:
-            url = f"https://nofluffjobs.com/pl/jobs/{loc_url}/{cat}"
-            print(f"   🚀 [NoFluffJobs] Skanowanie: '{cat}'...")
+        tech_keywords = required_groups[0] if required_groups else ["python"]
+        categories_to_check = set()
+
+        for kw in tech_keywords:
+            kw = kw.lower()
+            if "python" in kw: categories_to_check.add("python")
+            if "data" in kw: categories_to_check.add("data")
+            if any(x in kw for x in ["ai", "learning", "ml"]): categories_to_check.add("artificial-intelligence")
+            if "back" in kw: categories_to_check.add("backend")
+
+        if not categories_to_check: categories_to_check = {"data", "artificial-intelligence"}
+
+        for cat in categories_to_check:
+            base_url = "https://nofluffjobs.com/pl"
+            mid_path = "remote" if is_remote else (location.lower() if location else "")
+
+            url = f"{base_url}/{mid_path}/{cat}" if mid_path else f"{base_url}/{cat}"
+            if is_junior: url += "?criteria=seniority%3Dtrainee,junior"
+
+            print(f"   🚀 [NoFluffJobs] Skanowanie: {url}")
             try:
                 self.driver.get(url)
                 time.sleep(2)
@@ -184,16 +260,19 @@ class PolishSitesScraper:
                 soup = BeautifulSoup(self.driver.page_source, "html.parser")
 
                 candidates = []
-                for link in soup.find_all("a", href=True):
-                    if "/pl/job/" in link['href'] and "job-apply" not in link['href']:
-                        title_tag = link.find("h3")
+                for link_tag in soup.find_all("a", href=True):
+                    if "/pl/job/" in link_tag['href'] and "job-apply" not in link_tag['href']:
+                        full_link = "https://nofluffjobs.com" + link_tag['href']
+                        if self._is_seen(full_link): continue
+
+                        title_tag = link_tag.find("h3")
                         if title_tag:
                             title = title_tag.text.strip()
-                            if _matches_complex_query(title, keywords, excludes):
-                                candidates.append((title, "https://nofluffjobs.com" + link['href']))
+                            if _matches_strict_query(title, required_groups, excludes):
+                                candidates.append((title, full_link))
 
                 candidates = list(set(candidates))
-                print(f"      -> Znaleziono {len(candidates)} ofert.")
+                print(f"      -> Znaleziono: {len(candidates)}")
 
                 for title, link in candidates:
                     results.append({
@@ -208,151 +287,264 @@ class PolishSitesScraper:
                 print(f"   ❌ Błąd NFJ: {e}")
         return results
 
-    def scrape_bulldogjob(self, keywords, excludes, location, is_remote):
-        # BulldogJob ma strukturę: https://bulldogjob.pl/companies/jobs/s/skills,Python,Java
+    # 3. BulldogJob
+    def scrape_bulldogjob(self, required_groups, excludes, location, is_remote):
         results = []
+        is_junior = _is_junior_search(required_groups)
 
-        # Przygotowanie słów kluczowych do URL (Bulldog wymaga przecinków)
-        valid_keywords = [k for k in keywords if len(k) > 1]  # Pomiń "R" lub "C" jeśli są za krótkie
-        if not valid_keywords:
-            valid_keywords = ["Python", "Data"]  # Domyślne jeśli brak
+        tech_group = required_groups[0] if required_groups else []
+        roles = []
+        for t in tech_group:
+            t = t.lower()
+            if "data" in t or "sql" in t:
+                roles.append("data")
+            elif "ai" in t or "learning" in t or "ml" in t:
+                roles.append("ai")
+            elif "python" in t or "java" in t or "back" in t:
+                roles.append("backend")
 
-        skills_path = ",".join(valid_keywords)
+        roles = list(set(roles))
+        if not roles: roles = ["data", "backend", "ai"]
 
-        # Filtry lokalizacji
-        loc_param = ""
+        base_url = "https://bulldogjob.pl/companies/jobs/s"
+        url_parts = []
+
         if is_remote:
-            loc_param = "/remote,true"
+            url_parts.append("remote,true")
         elif location:
-            loc_param = f"/city,{location}"
+            url_parts.append(f"city,{location}")
 
-        url = f"https://bulldogjob.pl/companies/jobs/s/skills,{skills_path}{loc_param}"
+        if roles: url_parts.append(f"role,{','.join(roles)}")
+        if is_junior: url_parts.append("experienceLevel,intern,junior")
 
-        print(f"   🚀 [BulldogJob] Skanowanie: {valid_keywords}...")
+        full_url = f"{base_url}/{'/'.join(url_parts)}"
 
+        print(f"   🚀 [BulldogJob] Skanowanie: {full_url}")
         try:
-            self.driver.get(url)
+            self.driver.get(full_url)
             time.sleep(2)
-            _scroll_page(self.driver, loops=5)  # Bulldog szybko ładuje wszystko
+            _scroll_page(self.driver, loops=5)
             soup = BeautifulSoup(self.driver.page_source, "html.parser")
 
             candidates = []
-            # Analiza struktury z pliku bulldogjob.py użytkownika deenuu1:
-            # class_="JobListItem_item__M79JI"
-
-            # Uwaga: Klasy CSS w React (np. __M79JI) mogą się zmieniać.
-            # Lepiej szukać po href zawierającym "/companies/jobs/"
             for a_tag in soup.find_all("a", href=True):
-                if "/companies/jobs/" in a_tag['href'] and not "page," in a_tag['href']:
-                    # Szukanie tytułu
+                if "/companies/jobs/" in a_tag['href'] and "page," not in a_tag['href']:
+                    raw_link = a_tag['href']
+                    full_link = raw_link if raw_link.startswith("http") else "https://bulldogjob.pl" + raw_link
+                    if self._is_seen(full_link): continue
+
                     title_tag = a_tag.find("h3")
                     if title_tag:
                         title = title_tag.text.strip()
-                        # Dodatkowa weryfikacja (Bulldog czasem wrzuca promowane niezwiązane)
-                        if _matches_complex_query(title, keywords, excludes):
-                            candidates.append((title, a_tag['href']))
+                        if _matches_strict_query(title, required_groups, excludes):
+                            candidates.append((title, full_link))
 
-            # Bulldog ma linki relatywne lub absolutne, upewnijmy się
-            clean_candidates = []
-            for t, l in candidates:
-                # Czasami link jest tylko fragmentem
-                full_link = l if l.startswith("http") else "https://bulldogjob.pl" + l
-                clean_candidates.append((t, full_link))
+            candidates = list(set(candidates))
+            print(f"      -> Znaleziono: {len(candidates)}")
 
-            clean_candidates = list(set(clean_candidates))
-            print(f"      -> Znaleziono {len(clean_candidates)} ofert.")
-
-            for title, link in clean_candidates:
+            for title, link in candidates:
                 results.append({
                     "site": "BulldogJob",
                     "title": title,
-                    "company": "BulldogJob Listing",
+                    "company": "BulldogJob",
                     "location": "Remote" if is_remote else location,
                     "job_url": link,
                     "description": _get_full_description(self.driver, link, "BulldogJob")
                 })
-
         except Exception as e:
             print(f"   ❌ Błąd BulldogJob: {e}")
-
         return results
 
-    def scrape_theprotocol(self, keywords, excludes, location, is_remote):
-        # TheProtocol: https://theprotocol.it/filtry/python;t/warszawa;wp
+    # 4. TheProtocol
+    def scrape_theprotocol(self, required_groups, excludes, location, is_remote):
         results = []
+        is_junior = _is_junior_search(required_groups)
 
-        search_query = keywords[0] if keywords else "python"
-        url = f"https://theprotocol.it/filtry/{search_query};t"
+        tech_keywords = required_groups[0] if required_groups else ["python"]
+        categories_slugs = set()
+        for t in tech_keywords:
+            t = t.lower()
+            if "python" in t:
+                categories_slugs.add("python")
+            elif "data" in t:
+                categories_slugs.add("big-data")
+            elif "ai" in t or "learning" in t:
+                categories_slugs.add("ai-ml")
+            elif "java" in t:
+                categories_slugs.add("java")
+            elif "backend" in t:
+                categories_slugs.add("backend")
+
+        if not categories_slugs: categories_slugs = {"python", "ai-ml"}
+
+        for tech_slug in categories_slugs:
+            url_segments = [f"{tech_slug};sp"]
+            if is_junior: url_segments.append("trainee,assistant,junior;p")
+
+            if is_remote:
+                url_segments.append("remote;wm")
+            elif location:
+                url_segments.append(f"{location.lower()};wp")
+
+            full_url = "https://theprotocol.it/filtry/" + "/".join(url_segments)
+
+            print(f"   🚀 [TheProtocol] Skanowanie: {full_url}")
+            try:
+                self.driver.get(full_url)
+                time.sleep(2)
+                _scroll_page(self.driver)
+                soup = BeautifulSoup(self.driver.page_source, "html.parser")
+
+                candidates = []
+                for a_tag in soup.find_all("a", href=True):
+                    if "/szczegoly/praca/" in a_tag['href']:
+                        full_link = "https://theprotocol.it" + a_tag['href']
+                        if self._is_seen(full_link): continue
+
+                        title_tag = a_tag.find("h2")
+                        if title_tag:
+                            title = title_tag.text.strip()
+                            if _matches_strict_query(title, required_groups, excludes):
+                                candidates.append((title, full_link))
+
+                candidates = list(set(candidates))
+                print(f"      -> Znaleziono: {len(candidates)}")
+
+                for title, link in candidates:
+                    results.append({
+                        "site": "TheProtocol",
+                        "title": title,
+                        "company": "TheProtocol",
+                        "location": location,
+                        "job_url": link,
+                        "description": _get_full_description(self.driver, link, "TheProtocol")
+                    })
+            except Exception as e:
+                print(f"   ❌ Błąd TheProtocol: {e}")
+        return results
+
+    # 5. Pracuj.pl
+    def scrape_pracujpl(self, required_groups, excludes, location, is_remote):
+        results = []
+        is_junior = _is_junior_search(required_groups)
+
+        tech_keywords = required_groups[0] if required_groups else []
+        its_codes = set()
+
+        for t in tech_keywords:
+            t = t.lower()
+            if "ai" in t or "learning" in t or "ml" in t or "nlp" in t:
+                its_codes.add("ai-ml")
+            if "python" in t or "java" in t or "backend" in t or "c#" in t:
+                its_codes.add("backend")
+            if "data" in t or "anal" in t or "sql" in t:
+                its_codes.add("data-analytics-and-bi")
+                its_codes.add("big-data-science")
+
+        if not its_codes:
+            its_codes = {"ai-ml", "backend", "data-analytics-and-bi", "big-data-science"}
+
+        its_param = "%2C".join(its_codes)
+
+        base_url = "https://it.pracuj.pl/praca"
 
         if is_remote:
-            url += "/remote;wm"
+            path_loc = "praca%20zdalna;wm,home-office"
         elif location:
-            url += f"/{location};wp"
+            path_loc = f"{location.lower()};wp"
+        else:
+            path_loc = ""
 
-        print(f"   🚀 [TheProtocol] Skanowanie: '{search_query}'...")
+        params = []
+        params.append("rd=0")
+
+        if is_junior:
+            params.append("et=1%2C3%2C17")
+
+        if its_param:
+            params.append(f"its={its_param}")
+
+        if not is_remote:
+            params.append("wm=full-office%2Chybrid")
+
+        full_url = f"{base_url}/{path_loc}"
+        if params:
+            full_url += "?" + "&".join(params)
+
+        print(f"   🚀 [Pracuj.pl] Skanowanie: {full_url}")
 
         try:
-            self.driver.get(url)
+            self.driver.get(full_url)
             time.sleep(2)
-            _scroll_page(self.driver)
+            _scroll_page(self.driver, loops=5)
             soup = BeautifulSoup(self.driver.page_source, "html.parser")
 
             candidates = []
-            # Szukamy linków ofert
-            for a_tag in soup.find_all("a", href=True):
-                if "/szczegoly/praca/" in a_tag['href']:
-                    title_tag = a_tag.find("h2")
-                    if title_tag:
-                        title = title_tag.text.strip()
-                        if _matches_complex_query(title, keywords, excludes):
-                            full_link = "https://theprotocol.it" + a_tag['href']
-                            candidates.append((title, full_link))
+            offer_items = soup.find_all("div", attrs={"data-test": "offer-item"})
+
+            if not offer_items:
+                offer_items = soup.find_all("div", class_="offer-view")
+
+            for item in offer_items:
+                link_tag = item.find("a", attrs={"data-test": "link-offer"})
+                title_tag = item.find("h2", attrs={"data-test": "offer-title"})
+
+                if link_tag and title_tag:
+                    raw_link = link_tag['href']
+                    full_link = raw_link if raw_link.startswith("http") else "https://it.pracuj.pl" + raw_link
+
+                    if self._is_seen(full_link): continue
+
+                    title = title_tag.text.strip()
+                    if _matches_strict_query(title, required_groups, excludes):
+                        candidates.append((title, full_link))
 
             candidates = list(set(candidates))
-            print(f"      -> Znaleziono {len(candidates)} ofert.")
+            print(f"      -> Znaleziono: {len(candidates)}")
 
             for title, link in candidates:
                 results.append({
-                    "site": "TheProtocol",
+                    "site": "Pracuj.pl",
                     "title": title,
-                    "company": "TheProtocol Listing",
-                    "location": location,
+                    "company": "Pracuj.pl Listing",
+                    "location": "Remote" if is_remote else location,
                     "job_url": link,
-                    "description": _get_full_description(self.driver, link, "TheProtocol")
+                    "description": _get_full_description(self.driver, link, "Pracuj.pl")
                 })
-
         except Exception as e:
-            print(f"   ❌ Błąd TheProtocol: {e}")
+            print(f"   ❌ Błąd Pracuj.pl: {e}")
 
         return results
 
 
 # --- FUNKCJA GŁÓWNA ---
 
-def scrape_other_sites(search_term: str, location: str, is_remote: bool) -> list[dict]:
-    """
-    Główna funkcja wywoływana z job_scraper.py.
-    """
-    print(f"\n🔍 [Selenium] Rozpoczynam skanowanie polskich portali...")
+def scrape_other_sites(search_term: str, location: str, is_remote: bool, seen_urls: set = None) -> list[dict]:
+    print(f"\n🔍 [Selenium] Rozpoczynam PRECYZYJNE skanowanie polskich portali...")
+    if seen_urls:
+        print(f"   ♻️  Włączono filtr historii: Ignoruję {len(seen_urls)} znanych linków.")
+    else:
+        print("   👀 Filtr historii WYŁĄCZONY: Pobieram wszystkie znalezione oferty.")
 
-    keywords, excludes = _extract_keywords_from_search(search_term)
-    print(f"   ℹ️  Filtry: Szukam={keywords}... Wykluczam={excludes}")
+    required_groups, excludes = _parse_strict_query(search_term)
+
+    is_jun = _is_junior_search(required_groups)
+    mode_info = "JUNIOR/INTERN" if is_jun else "WSZYSTKIE POZIOMY"
+
+    print(f"   ℹ️  TRYB: {mode_info} | GRUPY: {[g[:3] for g in required_groups]} | WYKLUCZENIA: {excludes}")
 
     all_offers = []
     driver = None
 
     try:
         driver = _get_driver()
-        scraper = PolishSitesScraper(driver)
+        scraper = PolishSitesScraper(driver, seen_urls)
 
-        # 1. Just Join IT
-        all_offers.extend(scraper.scrape_justjoinit(keywords, excludes, location, is_remote))
-        # 2. No Fluff Jobs
-        all_offers.extend(scraper.scrape_nofluffjobs(keywords, excludes, location, is_remote))
-        # 3. BulldogJob
-        all_offers.extend(scraper.scrape_bulldogjob(keywords, excludes, location, is_remote))
-        # 4. TheProtocol (Grupa Pracuj)
-        all_offers.extend(scraper.scrape_theprotocol(keywords, excludes, location, is_remote))
+        all_offers.extend(scraper.scrape_justjoinit(required_groups, excludes, location, is_remote))
+        all_offers.extend(scraper.scrape_nofluffjobs(required_groups, excludes, location, is_remote))
+        all_offers.extend(scraper.scrape_bulldogjob(required_groups, excludes, location, is_remote))
+        all_offers.extend(scraper.scrape_theprotocol(required_groups, excludes, location, is_remote))
+        all_offers.extend(scraper.scrape_pracujpl(required_groups, excludes, location, is_remote))
 
     except Exception as e:
         print(f"❌ Krytyczny błąd Selenium: {e}")
@@ -363,5 +555,5 @@ def scrape_other_sites(search_term: str, location: str, is_remote: bool) -> list
             except Exception:
                 pass
 
-    print(f"✅ [Selenium] Znaleziono łącznie: {len(all_offers)} ofert z pełnymi opisami.")
+    print(f"✅ [Selenium] Znaleziono łącznie: {len(all_offers)} NOWYCH ofert.")
     return all_offers

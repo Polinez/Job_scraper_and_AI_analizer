@@ -106,8 +106,10 @@ def find_jobs(search:str, location:str = "Katowice", h_old:int = 24, remote:bool
     seen_urls = _load_history_urls()
     all_jobs_list = []
 
-    #Selenium (JustJoinIT, NoFluffJobs, BulldogJob, TheProtocol) - local
-    selenium_jobs = scrape_other_sites(search, location, remote)
+    #Selenium (JustJoinIT, NoFluffJobs, BulldogJob, TheProtocol)
+    urls_to_skip = seen_urls if filter_history else None
+
+    selenium_jobs = scrape_other_sites(search, location, remote, urls_to_skip)
     all_jobs_list.extend(selenium_jobs)
 
     # search for local jobs
