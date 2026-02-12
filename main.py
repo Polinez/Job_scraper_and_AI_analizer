@@ -23,10 +23,15 @@ AND
 -Senior -B2B
 """
 search = search.replace("\n", " ").strip()
-jobs_list = find_jobs(search=search, location="Katowice", h_old=168, remote=False, filter_history=False)
+jobs_list = find_jobs(search=search,
+                      location="Katowice",
+                      h_old=168*2, # 2 weeks
+                      remote=False,
+                      filter_history=False
+                      )
 
 # getting cv analizeed to evry job role
-# list_of_dict = analyze_jobs_with_ai(jobs_list,cv_text)
+list_of_dict = analyze_jobs_with_ai(jobs_list,cv_text)
 
 #TODO: Add RUG system like here https://github.com/gopiashokan/AI-Resume-Analyzer-and-LinkedIn-Scraper-using-Generative-AI
 

@@ -12,7 +12,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 def _get_driver():
     """Konfiguruje i zwraca sterownik Chrome w trybie headless."""
     options = Options()
-    # options.add_argument("--headless=new") # Włącz dla wydajności (zakomentuj dla podglądu)
+    options.add_argument("--headless=new") # Włącz dla wydajności (zakomentuj dla podglądu)
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")

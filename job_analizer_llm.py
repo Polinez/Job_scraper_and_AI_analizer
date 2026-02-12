@@ -7,10 +7,69 @@ import json
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from pydantic import BaseModel, Field
-from typing import List, Any
+from typing import List, Any, cast
+
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from datetime import datetime
 
 load_dotenv()
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
+
+
+def _send_summary_email(analysis_results: list[dict]):
+    # Pobieranie danych z .env
+    sender = os.getenv("SENDER_EMAIL")
+    password = os.getenv("SENDER_PASSWORD")
+    recipient = os.getenv("RECIPIENT_EMAIL")
+
+    if not all([sender, password, recipient]):
+        print("❌ Błąd: Brak konfiguracji e-mail w .env")
+        return
+
+    # Generowanie bloków ofert w HTML
+    job_blocks = []
+    for item in analysis_results:
+        analysis = item.get('analysis', {})
+        score = analysis.get('match_score', 0)
+        color = "#28a745" if score >= 70 else "#ffc107" if score >= 45 else "#dc3545"
+
+        block = f"""
+            <div style="margin-bottom: 20px; padding: 10px; border-left: 5px solid {color}; background-color: #f9f9f9;">
+                <h3 style="margin: 0;">{item.get('title')} - <span style="color: #666;">{item.get('company')}</span></h3>
+                <p style="margin: 5px 0;"><b>Dopasowanie:</b> <span style="color: {color}; font-size: 1.2em;">{score}/100</span></p>
+                <p style="margin: 5px 0;"><b>Rekomendacja:</b> {analysis.get('advice')}</p>
+                <a href="{item.get('url')}" style="color: #007bff;">Otwórz ofertę →</a>
+            </div>"""
+        job_blocks.append(block)
+
+    # Składanie pełnego dokumentu HTML
+    html_body = f"""
+        <html>
+            <body style="font-family: Arial, sans-serif; color: #333;">
+                <h2 style="color: #2d5a27;">Wyniki analizy ofert pracy ({len(analysis_results)})</h2>
+                <hr>
+                {"".join(job_blocks)}
+            </body>
+        </html>"""
+
+    # Przygotowanie i wysyłka wiadomości
+    msg = MIMEMultipart()
+    msg['From'], msg['To'], msg[
+        'Subject'] = sender, recipient, f"Raport ofert - {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    msg.attach(MIMEText(html_body, 'html'))
+
+    try:
+        # Użycie 'with' automatycznie zamyka połączenie (quit)
+        with smtplib.SMTP("smtp.mail.yahoo.com", 587) as server:
+            server.starttls()
+            server.login(sender, password)
+            server.send_message(msg)
+        print("✅ E-mail wysłany pomyślnie!")
+    except Exception as e:
+        print(f"❌ Błąd wysyłki: {e}")
+
 
 def _load_analysis_history(file_path: str) -> list:
     if os.path.exists(file_path):
@@ -148,4 +207,7 @@ def analyze_jobs_with_ai(jobs_list:list[dict], cv_text:str) -> list[Any] | None:
             print("   💤 Czekam 15 sekund przed kolejną ofertą...")
             time.sleep(15)
 
-        return analysis_results
+    if analysis_results:
+        _send_summary_email(analysis_results)
+
+    return analysis_results
