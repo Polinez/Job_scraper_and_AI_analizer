@@ -121,6 +121,8 @@ def analyze_jobs_with_ai(jobs_list:list[dict], cv_text:str) -> list[Any] | None:
 
     seen_urls = {item.get('url') for item in analysis_results if item.get('url')}
 
+    new_findings = []
+
     print(f"\n🚀 Rozpoczynam analizę {len(jobs_list)} ofert...\n")
 
     for index, job in enumerate(jobs_list):
@@ -175,6 +177,9 @@ def analyze_jobs_with_ai(jobs_list:list[dict], cv_text:str) -> list[Any] | None:
 
                 # add to results and seen urls
                 analysis_results.append(result)
+                # new finds for this session, will be used to send email summary at the end
+                new_findings.append(result)
+                # add to seen urls to avoid duplicates in same session
                 seen_urls.add(job_url)
 
                 # Print summary
@@ -207,7 +212,10 @@ def analyze_jobs_with_ai(jobs_list:list[dict], cv_text:str) -> list[Any] | None:
             print("   💤 Czekam 15 sekund przed kolejną ofertą...")
             time.sleep(15)
 
-    if analysis_results:
-        _send_summary_email(analysis_results)
+    if new_findings:
+        print(f"📧 Wysyłam powiadomienie o {len(new_findings)} nowych ofertach.")
+        _send_summary_email(new_findings)
+    else:
+        print("📭 Brak nowych ofert do wysłania.")
 
     return analysis_results

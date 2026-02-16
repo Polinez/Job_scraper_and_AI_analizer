@@ -27,7 +27,7 @@ jobs_list = find_jobs(search=search,
                       location="Katowice",
                       h_old=168*2, # 2 weeks
                       remote=False,
-                      filter_history=False
+                      filter_history=True
                       )
 
 # getting cv analizeed to evry job role
