@@ -31,7 +31,7 @@ jobs_list = find_jobs(search=search,
                       )
 
 # getting cv analizeed to evry job role
-#list_of_dict = analyze_jobs_with_ai(jobs_list,cv_text)
+list_of_dict = analyze_jobs_with_ai(jobs_list,cv_text)
 
 #TODO: Add RUG system like here https://github.com/gopiashokan/AI-Resume-Analyzer-and-LinkedIn-Scraper-using-Generative-AI
 
