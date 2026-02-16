@@ -1,4 +1,4 @@
-#https://github.com/speedyapply/JobSpy?tab=readme-ov-file
+# https://github.com/speedyapply/JobSpy?tab=readme-ov-file
 import pandas as pd
 import os
 import requests
@@ -29,6 +29,7 @@ def _load_history_urls() -> set:
 
     return seen_urls
 
+
 def _save_ai_input(df: pd.DataFrame):
     if not df.empty:
         df.to_json(AI_INPUT_FILE_PATH, orient="records", indent=4, force_ascii=False)
@@ -38,6 +39,7 @@ def _save_ai_input(df: pd.DataFrame):
         with open(AI_INPUT_FILE_PATH, 'w') as f:
             f.write("[]")
         print("🏁 Brak ofert do przetworzenia (plik wyczyszczony).")
+
 
 def _update_history(new_jobs_df: pd.DataFrame):
     if new_jobs_df.empty:
@@ -56,9 +58,10 @@ def _update_history(new_jobs_df: pd.DataFrame):
     df_updated.to_json(HISTORY_FILE_PATH, orient="records", indent=4, force_ascii=False)
     print(f"📚 Zaktualizowano archiwum '{HISTORY_FILE_PATH}' (+{len(new_jobs_df)} nowych).")
 
+
 def _perform_scrape(site_name, search_term, location, distance,
-           is_remote, results_wanted, hours_old, country_indeed,
-           linkedin_fetch_description, description_format) -> list[dict]:
+                    is_remote, results_wanted, hours_old, country_indeed,
+                    linkedin_fetch_description, description_format) -> list[dict]:
     try:
         jobs_df = scrape_jobs(
             site_name=site_name,
@@ -75,14 +78,15 @@ def _perform_scrape(site_name, search_term, location, distance,
 
         if not jobs_df.empty:
             count = len(jobs_df)
-            print(f"   ---> Znaleziono: {count}")
+            # Zmieniono komunikat na bardziej opisowy dla JobSpy
+            print(f"   ---> JobSpy znalazł: {count} ({location}, remote={is_remote})")
             return jobs_df.to_dict(orient="records")
         else:
-            print(f"   ---> Brak wyników.")
+            print(f"   ---> JobSpy: Brak wyników dla ({location}).")
             return []
 
     except Exception as e:
-        print(f"❌ Błąd podczas skrapowania ({location}, remote={is_remote}): {e}")
+        print(f"❌ Błąd podczas skrapowania API ({location}, remote={is_remote}): {e}")
         return []
 
 
@@ -98,75 +102,93 @@ def _process_job_list(all_jobs: list) -> pd.DataFrame:
 
     return df
 
-def find_jobs(search:str, location:str = "Katowice", h_old:int = 24, remote:bool = False, filter_history:bool = True
-              )->list[dict]:
 
-
-    # load history of seen URLs
+def find_jobs(search: str, location: str = "Katowice", h_old: int = 24, remote: bool = False,
+              filter_history: bool = True
+              ) -> list[dict]:
+    # 1. Załadowanie historii
     seen_urls = _load_history_urls()
-    all_jobs_list = []
 
-    #Selenium (JustJoinIT, NoFluffJobs, BulldogJob, TheProtocol)
-    urls_to_skip = seen_urls if filter_history else None
+    # --- KROK 1: SELENIUM (JustJoinIT, NoFluffJobs, LinkedIn Manual itd.) ---
+    # Przekazujemy seen_urls do Selenium, aby od razu wiedział co pominąć
+    urls_to_skip_for_selenium = seen_urls.copy() if filter_history else set()
+    selenium_jobs = scrape_other_sites(search, location, remote, urls_to_skip_for_selenium)
 
-    selenium_jobs = scrape_other_sites(search, location, remote, urls_to_skip)
-    all_jobs_list.extend(selenium_jobs)
+    # --- KROK 2: API (JobSpy - Indeed, LinkedIn API) ---
+    print(f"\n📡 [API] Uruchamiam JobSpy...")
 
-    # search for local jobs
-    local_jobs = _perform_scrape(
-                                site_name=SITE_NAMES,
-                                search_term=search,
-                                location=location,
-                                distance=0,
-                                is_remote=False,
-                                results_wanted=50,
-                                hours_old=h_old,
-                                country_indeed='Poland',
-                                linkedin_fetch_description=True,
-                                description_format="markdown")
-    all_jobs_list.extend(local_jobs)
+    # Lokalne
+    jobspy_local = _perform_scrape(
+        site_name=SITE_NAMES,
+        search_term=search,
+        location=location,
+        distance=0,
+        is_remote=False,
+        results_wanted=50,
+        hours_old=h_old,
+        country_indeed='Poland',
+        linkedin_fetch_description=True,
+        description_format="markdown")
 
-
-    # search for remote jobs (if enabled)
+    # Zdalne
+    jobspy_remote = []
     if remote:
-        remote_jobs = _perform_scrape(
-                                site_name=SITE_NAMES,
-                                 search_term=search,
-                                 location="Poland",
-                                 distance=0,
-                                 is_remote=True,
-                                 results_wanted=50,
-                                 hours_old=h_old,
-                                 country_indeed='Poland',
-                                 linkedin_fetch_description=True,
-                                 description_format="markdown")
-        all_jobs_list.extend(remote_jobs)
+        jobspy_remote = _perform_scrape(
+            site_name=SITE_NAMES,
+            search_term=search,
+            location="Poland",
+            distance=0,
+            is_remote=True,
+            results_wanted=50,
+            hours_old=h_old,
+            country_indeed='Poland',
+            linkedin_fetch_description=True,
+            description_format="markdown")
 
-    # preprocess the combined job list into a DataFrame
-    df_current = _process_job_list(all_jobs_list)
+    # Łączymy wyniki JobSpy (Surowe)
+    raw_jobspy_list = jobspy_local + jobspy_remote
+    raw_jobspy_count = len(raw_jobspy_list)
 
-    if df_current.empty:
-        print("⚠️ Nie znaleziono żadnych ofert w obu krokach.")
-        return []
+    # Filtrowanie JobSpy przez historię
+    new_jobspy_list = []
+    jobspy_filtered_out = 0
 
-    print(f"\n✅ Łącznie pobrano unikalnych ofert (w tej sesji): {len(df_current)}")
+    for job in raw_jobspy_list:
+        if filter_history and job['job_url'] in seen_urls:
+            jobspy_filtered_out += 1
+        else:
+            new_jobspy_list.append(job)
+            # Dodajemy do seen_urls, żeby nie dublować, jeśli Selenium znalazło to samo
+            seen_urls.add(job['job_url'])
 
-    # filert, truly_new_jobs_df->
-    # whats new in current batch compared to history, this is what we will save to history and pass to AI
-    # ~ = Not
-    truly_new_jobs_df = df_current[~df_current['job_url'].isin(seen_urls)]
+    # --- KROK 3: ŁĄCZENIE I RAPORT ---
+    # Selenium_jobs są już przefiltrowane wewnątrz swojej funkcji
+    all_final_list = selenium_jobs + new_jobspy_list
+    df_current = _process_job_list(all_final_list)
 
-    # final_output_df -> return to user
+    print("\n📝 === PODSUMOWANIE SESJI ===")
+
+    # Raport API
+    print(f"📡 API (JobSpy):")
+    print(f"   -> Znaleziono łącznie: {raw_jobspy_count}")
     if filter_history:
-        final_output_df = truly_new_jobs_df
-        print(f"♻️  Filtr historii WŁĄCZONY. Ukryto {len(df_current) - len(final_output_df)} znanych ofert.")
-    else:
-        final_output_df = df_current
-        print(f"👀 Filtr historii WYŁĄCZONY. Zwracam wszystkie {len(final_output_df)} ofert.")
+        print(f"   -> Odrzucono (historia): {jobspy_filtered_out}")
+    print(f"   -> Nowe unikalne: {len(new_jobspy_list)}")
+
+    # Selenium (statystyki są już częściowo w logu selenium, ale podsumujmy wynik)
+    print(f"🔍 Selenium (Custom Scrapers):")
+    print(f"   -> Nowe unikalne (dopisane): {len(selenium_jobs)}")
+
+    total_new = len(df_current)
+    print(f"\n✅ ŁĄCZNIE NOWYCH OFERT: {total_new}")
+    print("==============================\n")
 
     # save files
-    _save_ai_input(final_output_df)
-    _update_history(truly_new_jobs_df)
+    if not df_current.empty:
+        _save_ai_input(df_current)
+        _update_history(df_current)
+    else:
+        _save_ai_input(pd.DataFrame())
+        print("📚 Archiwum aktualne (brak nowych ofert).")
 
-    return final_output_df.to_dict(orient="records")
-
+    return df_current.to_dict(orient="records")
