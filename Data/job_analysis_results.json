@@ -1,0 +1,22 @@
+[
+    {
+        "company": "JJIT Listing",
+        "title": "Backend and Data Engineer",
+        "url": "https://justjoin.it/job-offer/transition-technologies-ms-backend-and-data-engineer-warszawa-data",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 35,
+            "missing_skills": [
+                "Zaawansowana znajomość MongoDB Atlas",
+                "Beanie ODM",
+                "Motor (asynchroniczny sterownik MongoDB)",
+                "AWS (S3, Lambda, Glue, Boto3)",
+                "Implementacja standardów OAuth2 i JWT",
+                "gSheet API",
+                "Doświadczenie na poziomie Senior",
+                "Modelowanie danych NoSQL"
+            ],
+            "advice": "Oferta jest skierowana do osób na poziomie Senior, podczas gdy Twoje doświadczenie jest na etapie juniorskim/stażowym. Posiadasz solidne podstawy w FastAPI i Pythonie, ale musisz nadrobić braki w technologiach chmurowych AWS oraz bazach NoSQL. Skup się na projektach łączących FastAPI z MongoDB, aby lepiej dopasować się do takich wymagań w przyszłości."
+        }
+    }
+]

@@ -13,7 +13,7 @@ my_cv_eng_path_pc = os.path.join("C:\\", "Users", "Sebastian", "Desktop", "Synol
 
 # "C:\Users\Sebastian\Desktop\SynologyDrive\praca\SebastianWandzelPOL.pdf"
 # my_cv_pol_path = os.path.join("/", "Users", "sebastian", "Desktop", "praca", "SebastianWandzelPOL.pdf")
-cv_text =load_cv_text(my_cv_eng_path_pc)
+cv_text =load_cv_text(my_cv_eng_path_mac)
 
 # Finding job offers and returning to list of dicts
 search = """

@@ -1,7 +1,5 @@
 /__pycache__
 /CVs/*
-/Data/*
 /.idea
-*.json
 .env
 /.venv
