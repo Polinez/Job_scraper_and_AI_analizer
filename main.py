@@ -1,4 +1,5 @@
 import os
+import platform
 from job_analizer_llm import analyze_jobs_with_ai
 from job_scraper import find_jobs
 from cv_to_text import load_cv_text
@@ -7,13 +8,18 @@ from cv_to_text import load_cv_text
 #job scraper documentation:
 # https://github.com/speedyapply/JobSpy?tab=readme-ov-file
 
-# Loading CV text
-my_cv_eng_path_mac = os.path.join("/", "Users", "sebastian", "Desktop", "praca", "SebastianWandzel.pdf")
-my_cv_eng_path_pc = os.path.join("C:\\", "Users", "Sebastian", "Desktop", "SynologyDrive", "praca" , "SebastianWandzel.pdf")
+# check os used
+current_os = platform.system()
 
-# "C:\Users\Sebastian\Desktop\SynologyDrive\praca\SebastianWandzelPOL.pdf"
-# my_cv_pol_path = os.path.join("/", "Users", "sebastian", "Desktop", "praca", "SebastianWandzelPOL.pdf")
-cv_text =load_cv_text(my_cv_eng_path_mac)
+if current_os == "Darwin": # macOS
+    cv_path = os.path.join("/", "Users", "sebastian", "Desktop", "praca", "SebastianWandzel.pdf")
+elif current_os == "Windows": # PC
+    # "C:\Users\Sebastian\Desktop\SynologyDrive\praca\SebastianWandzelPOL.pdf"
+    cv_path = os.path.join("C:\\", "Users", "Sebastian", "Desktop", "SynologyDrive", "praca" , "SebastianWandzel.pdf")
+else:
+    raise OSError(f"Nieobsługiwany system operacyjny: {current_os}")
+
+cv_text =load_cv_text(cv_path)
 
 # Finding job offers and returning to list of dicts
 search = """
@@ -25,7 +31,7 @@ AND
 search = search.replace("\n", " ").strip()
 jobs_list = find_jobs(search=search,
                       location="Katowice",
-                      h_old=168*2, # 2 weeks
+                      h_old=24*2, # 2 days
                       remote=False,
                       filter_history=True
                       )

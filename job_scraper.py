@@ -103,21 +103,18 @@ def _process_job_list(all_jobs: list) -> pd.DataFrame:
     return df
 
 
-def find_jobs(search: str, location: str = "Katowice", h_old: int = 24, remote: bool = False,
-              filter_history: bool = True
-              ) -> list[dict]:
-    # 1. Załadowanie historii
+def find_jobs(search: str, location: str = "Katowice", h_old: int = 24, remote: bool = False,filter_history: bool = True) -> list[dict]:
+    # Load history of seen URLs to avoid duplicates across both Selenium and API scrapes
     seen_urls = _load_history_urls()
 
-    # --- KROK 1: SELENIUM (JustJoinIT, NoFluffJobs, LinkedIn Manual itd.) ---
-    # Przekazujemy seen_urls do Selenium, aby od razu wiedział co pominąć
+    # SELENIUM (JustJoinIT, NoFluffJobs, LinkedIn Manual )
     urls_to_skip_for_selenium = seen_urls.copy() if filter_history else set()
     selenium_jobs = scrape_other_sites(search, location, remote, urls_to_skip_for_selenium)
 
-    # --- KROK 2: API (JobSpy - Indeed, LinkedIn API) ---
+    # API (JobSpy - Indeed, LinkedIn API) ---
     print(f"\n📡 [API] Uruchamiam JobSpy...")
 
-    # Lokalne
+    # Local
     jobspy_local = _perform_scrape(
         site_name=SITE_NAMES,
         search_term=search,
@@ -130,7 +127,7 @@ def find_jobs(search: str, location: str = "Katowice", h_old: int = 24, remote: 
         linkedin_fetch_description=True,
         description_format="markdown")
 
-    # Zdalne
+    # Remote
     jobspy_remote = []
     if remote:
         jobspy_remote = _perform_scrape(
@@ -145,11 +142,11 @@ def find_jobs(search: str, location: str = "Katowice", h_old: int = 24, remote: 
             linkedin_fetch_description=True,
             description_format="markdown")
 
-    # Łączymy wyniki JobSpy (Surowe)
+    # Combine local and remote results for JobSpy before filtering
     raw_jobspy_list = jobspy_local + jobspy_remote
     raw_jobspy_count = len(raw_jobspy_list)
 
-    # Filtrowanie JobSpy przez historię
+    # filter jobspy results based on history (if enabled) and also add to seen_urls to avoid duplicates with Selenium results
     new_jobspy_list = []
     jobspy_filtered_out = 0
 
@@ -158,25 +155,23 @@ def find_jobs(search: str, location: str = "Katowice", h_old: int = 24, remote: 
             jobspy_filtered_out += 1
         else:
             new_jobspy_list.append(job)
-            # Dodajemy do seen_urls, żeby nie dublować, jeśli Selenium znalazło to samo
             seen_urls.add(job['job_url'])
 
-    # --- KROK 3: ŁĄCZENIE I RAPORT ---
-    # Selenium_jobs są już przefiltrowane wewnątrz swojej funkcji
+    #  COMBINE AND RAPORT
     all_final_list = selenium_jobs + new_jobspy_list
     df_current = _process_job_list(all_final_list)
 
     print("\n📝 === PODSUMOWANIE SESJI ===")
 
     # Raport API
-    print(f"📡 API (JobSpy):")
+    print(f"API (JobSpy):")
     print(f"   -> Znaleziono łącznie: {raw_jobspy_count}")
     if filter_history:
         print(f"   -> Odrzucono (historia): {jobspy_filtered_out}")
     print(f"   -> Nowe unikalne: {len(new_jobspy_list)}")
 
-    # Selenium (statystyki są już częściowo w logu selenium, ale podsumujmy wynik)
-    print(f"🔍 Selenium (Custom Scrapers):")
+    # Selenium
+    print(f"Selenium (Custom Scrapers):")
     print(f"   -> Nowe unikalne (dopisane): {len(selenium_jobs)}")
 
     total_new = len(df_current)

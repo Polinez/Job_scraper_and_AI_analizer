@@ -620,7 +620,7 @@ class PolishSitesScraper:
         return results
 
 
-# --- FUNKCJA GŁÓWNA ---
+# --- MAIN ---
 
 def scrape_other_sites(search_term: str, location: str, is_remote: bool, seen_urls: set = None) -> list[dict]:
     print(f"\n🔍 [Selenium] Rozpoczynam PRECYZYJNE skanowanie polskich portali + LinkedIn...")

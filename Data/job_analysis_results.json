@@ -18,5 +18,150 @@
             ],
             "advice": "Oferta jest skierowana do osób na poziomie Senior, podczas gdy Twoje doświadczenie jest na etapie juniorskim/stażowym. Posiadasz solidne podstawy w FastAPI i Pythonie, ale musisz nadrobić braki w technologiach chmurowych AWS oraz bazach NoSQL. Skup się na projektach łączących FastAPI z MongoDB, aby lepiej dopasować się do takich wymagań w przyszłości."
         }
+    },
+    {
+        "company": "JJIT Listing",
+        "title": "Support (Intern) Data EngineerUndisclosed SalaryUndisclosed SalaryCLOUDFIDEKatowice, +2Locations11d leftPySparkAzureDatabricksPySparkAzureDatabricks11d left",
+        "url": "https://justjoin.it/job-offer/cloudfide-support-intern-data-engineer-katowice-data",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 92,
+            "missing_skills": [
+                "PySpark",
+                "Databricks",
+                "Doświadczenie z narzędziami ETL",
+                "Znajomość procesów CI/CD"
+            ],
+            "advice": "Twoje CV idealnie wpisuje się w wymagania, szczególnie status studenta i lokalizacja w Katowicach. Podkreśl w rozmowie swoje doświadczenie z Pythonem przy projektach AI oraz znajomość Azure, co jest dużym atutem. Warto wspomnieć o chęci rozwoju w stronę inżynierii danych i nauki Sparka."
+        }
+    },
+    {
+        "company": "JJIT Listing",
+        "title": "Junior Data EngineerUndisclosed SalaryUndisclosed SalaryCloudfideKatowice, +2Locations20d leftMicrosoft SQLAzureGCPMicrosoft SQLAzureGCP20d left",
+        "url": "https://justjoin.it/job-offer/cloudfide-junior-data-engineer-katowice-data",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 68,
+            "missing_skills": [
+                "Praktyczne doświadczenie w budowaniu potoków danych (data pipelines)",
+                "Znajomość procesów ETL/ELT",
+                "Databricks / Spark / PySpark",
+                "Narzędzia orkiestracji (np. Airflow)",
+                "CI/CD (Azure DevOps, GitHub Actions)",
+                "Modelowanie danych pod kątem architektur Lakehouse"
+            ],
+            "advice": "Podkreśl staż w Łukasiewicz AI jako doświadczenie techniczne z danymi, aby spełnić kluczowy wymóg 6 miesięcy stażu komercyjnego. Skup się na wyeksponowaniu znajomości Azure i SQL, które już posiadasz, oraz uzupełnij portfolio o prosty projekt ETL. Twoje doświadczenie w ML jest dużym atutem, ale musisz udowodnić umiejętność przetwarzania danych na dużą skalę."
+        }
+    },
+    {
+        "company": "JJIT Listing",
+        "title": "Super offerJunior Data Engineer (Azure Data Factory)7 000 - 12 600 PLN/month7 000 - 12 600 PLN/monthAddeptoKatowice, +4Locations25d leftDBTPower BIETL/ELTDBTPower BIETL/ELT25d left",
+        "url": "https://justjoin.it/job-offer/addepto-junior-data-engineer-azure-data-factory--katowice-data",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 35,
+            "missing_skills": [
+                "2+ lata doświadczenia w Azure Data Factory (ADF)",
+                "CI/CD w Azure DevOps",
+                "Power BI",
+                "Angielski na poziomie C1",
+                "Doświadczenie z Azure Functions i integracją REST API",
+                "Znajomość dbt"
+            ],
+            "advice": "Główną przeszkodą jest brak wymaganego 2-letniego doświadczenia w Azure Data Factory, które jest kluczowe w tej ofercie. Twoje CV wykazuje silne podstawy w Pythonie i SQL, ale powinieneś uzupełnić portfolio o konkretne projekty ETL oraz certyfikację z ADF. Warto również popracować nad podniesieniem poziomu języka angielskiego do C1."
+        }
+    },
+    {
+        "company": "JJIT Listing",
+        "title": "Super offerJunior Data Engineer (Databricks)8 400 - 15 120 PLN/month8 400 - 15 120 PLN/monthAddeptoKatowice, +4Locations10d leftAirflowDBTPower BIAirflowDBTPower BI10d left",
+        "url": "https://justjoin.it/job-offer/addepto-junior-data-engineer-databricks--katowice-data-019c2324",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 50,
+            "missing_skills": [
+                "Databricks",
+                "Apache Spark",
+                "Apache Airflow",
+                "DBT",
+                "Terraform (Infrastructure as Code)",
+                "Power BI",
+                "Modelowanie danych (wymiarowe)",
+                "Komercyjne doświadczenie w systemach Big Data"
+            ],
+            "advice": "Twoim największym atutem jest znajomość Azure, Python oraz lokalizacja w Katowicach, co pasuje do profilu firmy. Musisz jednak nadrobić brak znajomości stosu Big Data (Spark, Databricks), najlepiej realizując projekt typu 'end-to-end' i umieszczając go na GitHubie. W CV mocniej wyeksponuj staż w Łukasiewicz AI, łącząc go z wymaganiami dotyczącymi przetwarzania danych i współpracy z zespołami Data Science."
+        }
+    },
+    {
+        "company": "NFJ Listing",
+        "title": "Junior Data Engineer (Azure Data Factory)",
+        "url": "https://nofluffjobs.com/pl/job/junior-data-engineer-azure-data-factory-addepto-remote",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 58,
+            "missing_skills": [
+                "Azure Data Factory (ADF)",
+                "Azure Synapse Analytics",
+                "dbt (data build tool)",
+                "Power BI",
+                "Azure DevOps (CI/CD)",
+                "Projektowanie i monitorowanie potoków danych (ETL/ELT)"
+            ],
+            "advice": "Skup się na nauce Azure Data Factory oraz dbt, które są kluczowe w tej roli. Twoje doświadczenie w AI jest atutem dla Addepto, ale musisz nadrobić braki w narzędziach typowo inżynieryjnych (ETL). Wyjaśnij kwestię dostępności, gdyż oferta może dotyczyć zatrudnienia od zaraz, a Twoje CV wskazuje luty 2026."
+        }
+    },
+    {
+        "company": "NFJ Listing",
+        "title": "Junior Data Engineer (Azure Data Factory)",
+        "url": "https://nofluffjobs.com/pl/job/junior-data-engineer-azure-data-factory-addepto-katowice",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 58,
+            "missing_skills": [
+                "Azure Data Factory (ADF)",
+                "Azure Synapse Analytics",
+                "dbt (data build tool)",
+                "Power BI",
+                "Azure DevOps (CI/CD)",
+                "Projektowanie i monitorowanie potoków danych (ETL/ELT)"
+            ],
+            "advice": "Skup się na nauce Azure Data Factory oraz dbt, które są kluczowe w tej roli. Twoje doświadczenie w AI jest atutem dla Addepto, ale musisz nadrobić braki w narzędziach typowo inżynieryjnych (ETL). Wyjaśnij kwestię dostępności, gdyż oferta może dotyczyć zatrudnienia od zaraz, a Twoje CV wskazuje luty 2026."
+        }
+    },
+    {
+        "company": "NFJ Listing",
+        "title": "Junior Data Engineer (Databricks)",
+        "url": "https://nofluffjobs.com/pl/job/junior-data-engineer-databricks-addepto-remote-8",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 58,
+            "missing_skills": [
+                "Apache Spark",
+                "PySpark",
+                "Databricks",
+                "Delta Live Tables",
+                "Projektowanie potoków ETL/ELT",
+                "Modelowanie danych (Data Modeling)",
+                "Doświadczenie w pracy z Big Data"
+            ],
+            "advice": "Twoje doświadczenie w ML i znajomość Azure są cenne, ale musisz nadrobić braki w technologiach typowo inżynieryjnych, takich jak Spark i Databricks. Warto podkreślić projekty związane z SQL i przetwarzaniem danych, aby bardziej zbliżyć profil do roli Data Engineer. Pamiętaj, że Twoja dostępność dopiero od lutego 2026 roku może być istotną barierą w obecnym procesie rekrutacyjnym."
+        }
+    },
+    {
+        "company": "NFJ Listing",
+        "title": "Junior Python Developer (Django DRF)",
+        "url": "https://nofluffjobs.com/pl/job/junior-python-developer-django-drf-contelizer-remote-1",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 65,
+            "missing_skills": [
+                "Django REST Framework",
+                "Docker / Docker Swarm",
+                "Celery",
+                "Sentry",
+                "Grafana",
+                "Doświadczenie w systemach e-commerce (PIM/OMS/WMS)"
+            ],
+            "advice": "Uzupełnij wiedzę o Django REST Framework oraz podstawy konteneryzacji (Docker), które są kluczowe w tej ofercie. Warto przygotować projekt backendowy w portfolio, aby przesunąć akcent z Machine Learningu na czysty rozwój aplikacji webowych. Wyjaśnij kwestię swojej dostępności, ponieważ termin luty 2026 może być zbyt odległy dla bieżącej rekrutacji."
+        }
     }
 ]
