@@ -37,6 +37,8 @@ Before running the script for the first time, you need to adjust `main.py` to fi
 
 ## Running the Project
 
+**Important!!!!!: Before running the script for the very first time, make sure to delete all files inside the `Data` directory to ensure a clean start.**
+
 Once the configuration is complete, simply execute the script from your terminal:
 
 ```bash
