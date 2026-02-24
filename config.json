@@ -4,7 +4,7 @@
   "job_titles": ["Data Scientist", "Data Engineer", "Machine Learning", "Deep Learning", "NLP", "Artificial Intelligence", "GenAI", "Big Data", "Python Developer"],
   "experience_levels": ["Junior", "Intern", "Staż", "Trainee", "Młodszy", "Praktyka", "Asystent", "Graduate"],
   "exclude_keywords": ["Senior", "B2B"],
-  "location": "Krakow",
+  "location": "Katowice",
   "remote_only": false,
   "max_days_old": 2
 }
