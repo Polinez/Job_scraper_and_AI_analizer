@@ -69,6 +69,6 @@ jobs_list = find_jobs(
 
 # Analyze found jobs with AI and get results
 print(f"Znaleziono {len(jobs_list)} ofert. Trwa analiza AI...")
-# list_of_dict = analyze_jobs_with_ai(jobs_list, cv_text)
+list_of_dict = analyze_jobs_with_ai(jobs_list, cv_text)
 print("Analiza zakończona pomyślnie!")
 
