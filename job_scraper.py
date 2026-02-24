@@ -1,3 +1,4 @@
+#job scraper documentation:
 # https://github.com/speedyapply/JobSpy?tab=readme-ov-file
 import pandas as pd
 import os

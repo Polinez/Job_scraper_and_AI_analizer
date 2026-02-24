@@ -5,9 +5,6 @@ from job_scraper import find_jobs
 from cv_to_text import load_cv_text
 
 
-#job scraper documentation:
-# https://github.com/speedyapply/JobSpy?tab=readme-ov-file
-
 # check os used
 current_os = platform.system()
 
