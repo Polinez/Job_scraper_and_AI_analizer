@@ -3,3 +3,8 @@
 /.idea
 .env
 /.venv
+/src/__pycache__
+/src/scrapers/__pycache__
+*/__pycache__/*
+/src/services/__pycache__
+/src/utils/__pycache__
