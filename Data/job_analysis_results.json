@@ -492,5 +492,203 @@
             ],
             "advice": "Twoje doświadczenie w ML i NLP stanowi solidną bazę, ale oferta wymaga silniejszego ukierunkowania na inżynierię danych (Data Engineering). Podkreśl w CV projekty, w których zajmowałeś się czyszczeniem i przygotowywaniem zbiorów danych oraz znajomość SQL i Azure. Warto wspomnieć o umiejętnościach analitycznych, które pomogą w wyciąganiu wniosków biznesowych (Data Insights)."
         }
+    },
+    {
+        "company": "ING Poland",
+        "title": "Staż z Lwem – Cloud & AI Platform",
+        "url": "https://www.linkedin.com/jobs/view/4383171088",
+        "location": "Katowice, Śląskie, Poland",
+        "analysis": {
+            "match_score": 78,
+            "missing_skills": [
+                "Znajomość języka Java",
+                "Doświadczenie z Google Cloud Platform (GCP)",
+                "Praktyczna znajomość procesów CI/CD",
+                "Język angielski na poziomie C1 (w CV zadeklarowano B2)"
+            ],
+            "advice": "Podkreśl swoje doświadczenie w AI i znajomość Azure, co stanowi solidną bazę do nauki GCP. Warto zaznaczyć gotowość do szybkiego opanowania Javy oraz fakt, że mieszkasz w Katowicach. Twoje osiągnięcia akademickie i staż w Łukasiewicz AI wyróżnią Cię na tle innych kandydatów."
+        }
+    },
+    {
+        "company": "Stellantis",
+        "title": "Intern Data Engineering",
+        "url": "https://pl.linkedin.com/jobs/view/intern-data-engineering-at-stellantis-4382065865",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 80,
+            "missing_skills": [
+                "AWS (posiadasz Azure, co jest dobrym fundamentem, ale oferta wymaga AWS)",
+                "Databricks / Apache Spark",
+                "Praktyczne doświadczenie z procesami ETL",
+                "Znajomość koncepcji Data Lakehouse / Data Warehouse"
+            ],
+            "advice": "Podkreśl w CV swoje doświadczenie z Azure jako dowód na łatwość nauki innych platform chmurowych oraz opisz etapy przetwarzania danych w projektach ML. Warto zapoznać się z podstawami Apache Spark przed rozmową, aby wykazać inicjatywę w nauce stacku technologicznego Stellantis. Twoje wysokie wyniki w nauce i stypendia są bardzo silnym atutem w rekrutacji na staż."
+        }
+    },
+    {
+        "company": "Stellantis",
+        "title": "Intern Machine Learning Operations",
+        "url": "https://pl.linkedin.com/jobs/view/intern-machine-learning-operations-at-stellantis-4380287006",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 82,
+            "missing_skills": [
+                "MLflow",
+                "Grafana / Microsoft Power BI",
+                "Apache Spark / PySpark",
+                "Databricks",
+                "Doświadczenie z AWS",
+                "Monitoring i obserwowalność systemów ML"
+            ],
+            "advice": "Twoje doświadczenie w projektach ML i status studenta informatyki idealnie wpisują się w wymagania stażowe. Warto podkreślić w CV znajomość Azure jako fundament pod naukę AWS oraz wspomnieć o pracy w środowisku Linux. Skupienie się na aspektach wdrażania modeli (deployment) podczas rozmowy pomoże Ci zniwelować brak znajomości specyficznych narzędzi MLOps."
+        }
+    },
+    {
+        "company": "Stellantis",
+        "title": "Intern Machine Learning Anomaly Detection",
+        "url": "https://pl.linkedin.com/jobs/view/intern-machine-learning-anomaly-detection-at-stellantis-4364774688",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 85,
+            "missing_skills": [
+                "Doświadczenie w detekcji anomalii",
+                "Znajomość specyfiki danych z systemów pojazdów (connected vehicle signals)",
+                "Praktyczne doświadczenie w rekalibracji i utrzymaniu modeli na produkcji"
+            ],
+            "advice": "Twoje wykształcenie i certyfikat Nvidia Deep Learning idealnie wpisują się w profil kandydata. Warto w rozmowie podkreślić projekty związane z wizją komputerową jako dowód na umiejętność pracy ze złożonymi danymi. Przygotuj się merytorycznie z zakresu statystycznych metod wykrywania anomalii, gdyż jest to główny cel tego stanowiska."
+        }
+    },
+    {
+        "company": "Diebold Nixdorf",
+        "title": "INTERN- Software Engineer for AI",
+        "url": "https://pl.linkedin.com/jobs/view/intern-software-engineer-for-ai-at-diebold-nixdorf-4356575472",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 90,
+            "missing_skills": [
+                "Programowanie w języku C#",
+                "Doświadczenie z narzędziami DevOps (np. Jenkins)",
+                "Znajomość specyfiki branży retail"
+            ],
+            "advice": "Twoje doświadczenie ze stażu w Łukasiewicz AI oraz projekty z zakresu Computer Vision idealnie wpisują się w profil kandydata. Warto podkreślić w rozmowie biegłość w Pythonie i gotowość do nauki C#, który jest wymagany w ofercie. Skup się na prezentacji praktycznych wyników swoich badań nad modelami YOLO i NLP."
+        }
+    },
+    {
+        "company": "Deloitte",
+        "title": "Junior Business Analyst (Cloud Contact Center AI LAB)",
+        "url": "https://pl.linkedin.com/jobs/view/junior-business-analyst-cloud-contact-center-ai-lab-at-deloitte-4380296135",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 88,
+            "missing_skills": [
+                "Znajomość platformy Amazon Connect",
+                "Projektowanie map procesów i workflow (np. BPMN)",
+                "Projektowanie ścieżek klienta (Customer Journeys)",
+                "Doświadczenie w formalnej analizie biznesowej"
+            ],
+            "advice": "Twoje doświadczenie w Concentrix oraz studia na UE czynią Cię idealnym kandydatem, łączącym wiedzę o contact center z analitycznym podejściem. W CV warto mocniej wyeksponować umiejętność przekładania problemów technicznych na język biznesowy. Podkreśl znajomość Azure jako fundament pod szybką naukę ekosystemu AWS i Amazon Connect."
+        }
+    },
+    {
+        "company": "Stellantis",
+        "title": "Intern ML/AI model development",
+        "url": "https://pl.linkedin.com/jobs/view/intern-ml-ai-model-development-at-stellantis-4378172789",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 78,
+            "missing_skills": [
+                "GCP",
+                "AWS",
+                "Azure Databricks",
+                "Big Data",
+                "Doświadczenie w optymalizacji modeli predykcyjnych dla danych przemysłowych"
+            ],
+            "advice": "Twoje doświadczenie z LangChain i projektami ML świetnie wpisuje się w wymagania dotyczące agentów AI. Skup się na wyeksponowaniu umiejętności analitycznych w kontekście danych technicznych oraz wspomnij o znajomości Azure w szerszym kontekście chmurowym. Rozważ zdobycie podstawowej wiedzy o Databricks, co jest kluczowym wymogiem w tej ofercie."
+        }
+    },
+    {
+        "company": "ING Polska",
+        "title": "Staż z Lwem – Cloud & AI Platform",
+        "url": "https://pl.linkedin.com/jobs/view/sta%C5%BC-z-lwem-%E2%80%93-cloud-ai-platform-at-ing-poland-4383171088",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 72,
+            "missing_skills": [
+                "Biegła znajomość języka angielskiego (poziom C1)",
+                "Programowanie w języku Java",
+                "Znajomość Google Cloud Platform (GCP)",
+                "Praktyczna znajomość procesów CI/CD"
+            ],
+            "advice": "Twoje doświadczenie w ML i Pythonie świetnie wpisuje się w profil zespołu, jednak oferta kładzie duży nacisk na Javę i GCP. Podkreśl w rozmowie swoje umiejętności koordynacyjne oraz doświadczenie z Azure jako bazę do szybkiej nauki nowej chmury. Warto też popracować nad płynnością językową, gdyż wymagany jest poziom C1."
+        }
+    },
+    {
+        "company": "Deloitte",
+        "title": "Amazon Connect Junior Developer (Cloud Contact Center AI LAB)",
+        "url": "https://pl.linkedin.com/jobs/view/amazon-connect-junior-developer-cloud-contact-center-ai-lab-at-deloitte-4380291411",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 88,
+            "missing_skills": [
+                "Amazon Connect",
+                "Usługi AWS (Lambda, DynamoDB, S3)",
+                "Infrastructure as Code (Terraform, CloudFormation, CDK)",
+                "Praktyki DevOps",
+                "Node.js"
+            ],
+            "advice": "Twoje doświadczenie w Concentrix oraz silne podstawy w Pythonie i AI czynią Cię idealnym kandydatem na to szkolenie. Warto podkreślić w CV znajomość Azure jako dowód na łatwość adaptacji do nowych środowisk chmurowych, mimo że oferta skupia się na AWS. Jesteś bardzo silnym kandydatem ze względu na unikalne połączenie wiedzy technicznej i doświadczenia w branży contact center."
+        }
+    },
+    {
+        "company": "NFJ Listing",
+        "title": "Amazon Connect Junior Developer (Cloud Contact Center AI LAB)NOWA",
+        "url": "https://nofluffjobs.com/pl/job/amazon-connect-junior-developer-cloud-contact-center-ai-lab-deloitte-katowice",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 85,
+            "missing_skills": [
+                "Znajomość ekosystemu AWS (Amazon Web Services)",
+                "Doświadczenie z platformą Amazon Connect",
+                "Wiedza z zakresu rozwiązań CCaaS (Contact Center as a Service)",
+                "Praktyka w tworzeniu aplikacji cloud-native w środowisku AWS"
+            ],
+            "advice": "Twoje doświadczenie w obsłudze klienta połączone z projektami AI i NLP idealnie wpisuje się w profil kandydata do budowy inteligentnych centrów kontaktu. W aplikacji podkreśl swoją znajomość Azure jako dowód na łatwość adaptacji do nowych środowisk chmurowych, takich jak AWS. Jako student trzeciego roku z sukcesami naukowymi jesteś priorytetową grupą docelową dla tego programu stażowego."
+        }
+    },
+    {
+        "company": "NFJ Listing",
+        "title": "Junior Data Engineer (Azure Data Factory)NOWA",
+        "url": "https://nofluffjobs.com/pl/job/junior-data-engineer-azure-data-factory-addepto-remote-1",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 45,
+            "missing_skills": [
+                "Azure Data Factory (ADF)",
+                "dbt (data build tool)",
+                "Azure Synapse Analytics",
+                "Power BI",
+                "Azure DevOps (CI/CD)",
+                "Azure Functions (w kontekście inżynierii danych)"
+            ],
+            "advice": "Twoje doświadczenie w Azure i SQL to dobry fundament, ale oferta wymaga specyficznej wiedzy z zakresu inżynierii danych, szczególnie Azure Data Factory i dbt. Podkreśl w CV wszelkie projekty związane z budową rurociągów danych (ETL), nawet te realizowane w ramach projektów ML. Rozważ szybkie zapoznanie się z narzędziami do orkiestracji danych, aby lepiej dopasować się do profilu Junior Data Engineer."
+        }
+    },
+    {
+        "company": "NFJ Listing",
+        "title": "Junior Data Engineer (Databricks)NOWA",
+        "url": "https://nofluffjobs.com/pl/job/junior-data-engineer-databricks-addepto-remote-9",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 68,
+            "missing_skills": [
+                "Databricks",
+                "Apache Spark",
+                "PySpark",
+                "Delta Live Tables",
+                "Projektowanie rurociągów danych (ETL/ELT)",
+                "Modelowanie danych dla systemów Big Data"
+            ],
+            "advice": "Podkreśl w CV swoje doświadczenie z Azure oraz projektami ML, które wymagają zaawansowanego przetwarzania danych. Warto uzupełnić wiedzę o podstawy Apache Spark i Databricks, które są kluczowe w tej ofercie. Twoje staże w obszarze AI stanowią solidną bazę do rozwoju w kierunku Data Engineeringu."
+        }
     }
 ]
