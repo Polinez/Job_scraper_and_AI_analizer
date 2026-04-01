@@ -10,8 +10,8 @@
                                  I T T e c h n i c i a n                          
                                                                                   
                                  Third-year Computer Science student at the University of Economics
-                                 in Katowice with good knowledge of German. Specializing in Machine
-                                 Learning, with an additional personal interest in Cybersecurity.
+                                 in Katowice with good knowledge of German. I specialize in machine
+                                 learning, deep learning and EDA.                 
                                                                                   
                                                                                   
                                 EXPERIENCE                                        
@@ -56,7 +56,7 @@
             SKILLS               - Creating report on conducted test.             
       Git                       ACHIEVEMENTS                                      
       Scikit-learn                                                                
-      Machine Learning           Scholarship                              11.2025 
+      TensorFlow                 Scholarship                              11.2025 
       Website penetration testing                                                 
                                  Rector's Scholarship at University of Economics in Katowice
       Azure                                                                       
