@@ -306,24 +306,6 @@
         "posted_at":null
     },
     {
-        "title":"Junior Data Engineer (Azure Data Factory)",
-        "company":"NFJ Listing",
-        "location":"Katowice",
-        "job_url":"https:\/\/nofluffjobs.com\/pl\/job\/junior-data-engineer-azure-data-factory-addepto-katowice-1",
-        "site":"NoFluffJobs",
-        "description":"Opis oferty\nOryginalny tekst.\nPokaż tłumaczenie\nAddepto is a leading AI consulting (addepto.com\/ai-consulting\/) and data engineering (addepto.com\/data-engineering-services\/) company that builds scalable, ROI-focused AI solutions for some of the world's largest enterprises and pioneering startups, including Rolls Royce, Continental, Porsche, ABB, and WGU. With an exclusive focus on Artificial Intelligence and Big Data, Addepto helps organizations unlock the full potential of their data through systems designed for measurable business impact and long-term growth.\nThe company's work extends beyond client engagements. Drawing from real-world challenges and insights, Addepto has developed its own product - ContextClue - and actively contributes open-source solutions to the AI community. This commitment to transforming practical experience into scalable innovation has earned Addepto recognition by Forbes as one of the top 10 AI consulting companies worldwide.\nAs part of KMS Technology, a US-based global technology group, Addepto combines deep AI specialization with enterprise-scale delivery capabilities—enabling the partnership to move clients from AI experimentation to production impact, securely and at scale.\nAs a\nJunior Data Engineer\n, you will have the opportunity to support and further develop an Azure-based data integration solution built primarily around Azure Data Factory (ADF). The current environment includes Azure Functions and ingestion components, but daily delivery is strongly centered on ADF pipeline design, orchestration, monitoring, and continuous improvement.\nThe project focuses on expanding and stabilizing the existing data platform, including the warehouse layer (Azure SQL Database or Synapse), optional dbt-based transformations, and occasional Power BI reporting support. You will work closely with the client-side Product Owner and Architect, proactively aligning business needs with technical implementation decisions and ensuring high-quality, scalable solutions. Additionally, you will contribute to Azure DevOps CI\/CD pipelines and release processes to maintain reliable deployments across environments.\nDiscover our perks and benefits:\nWork in a supportive team of passionate enthusiasts of AI & Big Data.\nEngage with top-tier global enterprises and cutting-edge startups on international projects.\nEnjoy flexible work arrangements, allowing you to\nwork remotely\nor from modern offices and coworking spaces.\nAccelerate your professional growth through\ncareer paths\n,\nknowledge-sharing\ninitiatives,\nlanguage\nclasses, and sponsored\ntraining\nor\nconferences\n, including a partnership with\nDatabricks\n, which offers industry-leading training materials and certifications.\nChoose your preferred form of cooperation -\nB2B\nor a contract of mandate - and enjoy\n20 fully paid days off.\nParticipate in\nteam-building events\nand utilize the\nintegration budget\n.\nCelebrate\nwork anniversaries, birthdays,\nand\nmilestones.\nAccess\nmedical\nand\nsports packages\n, eye care, and well-being support services, including psychotherapy and coaching.\nGet full work equipment for optimal productivity, including a laptop and other necessary devices.\nWith our backing, you can\nboost\nyour\npersonal brand\nby speaking at conferences, writing for our blog, or participating in meetups.",
-        "posted_at":null
-    },
-    {
-        "title":"Junior Data Engineer (Databricks)",
-        "company":"NFJ Listing",
-        "location":"Katowice",
-        "job_url":"https:\/\/nofluffjobs.com\/pl\/job\/junior-data-engineer-databricks-addepto-katowice-3",
-        "site":"NoFluffJobs",
-        "description":"Opis oferty\nOryginalny tekst.\nPokaż tłumaczenie\nAddepto is a leading AI consulting and data engineering company that builds scalable, ROI-focused AI solutions for some of the world’s largest enterprises and pioneering startups, including Rolls Royce, Continental, Porsche, ABB, and WGU. With our exclusive focus on Artificial Intelligence and Big Data, we help organizations unlock the full potential of their data through systems designed for measurable business impact and long-term growth.\nBeyond client projects, we have developed our own product offerings born from real-life client insights and challenges. We are also actively releasing open-source solutions to the community, transforming practical experience into tools that benefit the broader AI ecosystem. This commitment to scalable innovation, proven ROI delivery, and knowledge sharing has earned us recognition by Forbes as one of the top 10 AI consulting companies worldwide.\nAs a\nJunior\nData Engineer\n, you will have the exciting opportunity to work with a team of technology experts on challenging projects across various industries, leveraging cutting-edge technologies.  Here are some of the projects we are seeking talented individuals to join:\nDesign and development of a universal data platform for global aerospace companies.\nThis Azure and Databricks powered initiative combines diverse enterprise and public data sources. The data platform is at the early stages of the development, covering design of architecture and processes, as well as giving freedom for technology selection.\nData Platform Transformation for energy management association body.\nThis project addressed critical data management challenges, boosting user adoption, performance, and data integrity. The team is implementing a comprehensive data catalog, leveraging Databricks and Apache Spark\/PySpark, for simplified data access and governance. Secure integration solutions and enhanced data quality monitoring, utilizing Delta Live Table tests, established trust in the platform. The intermediate result is a user-friendly, secure, and data-driven platform, serving as a basis for further development of ML components.\nDesign of the data transformation and following data ops pipelines for global car manufacturer.\nThis project aims to build a data processing system for both real-time streaming and batch data. We’ll handle data for business uses like process monitoring, analysis, and reporting, while also exploring LLMs for chatbots and data analysis. Key tasks include data cleaning, normalization, and optimizing the data model for performance and accuracy.\nDiscover our perks and benefits:\nWork in a supportive team of passionate enthusiasts of AI & Big Data.\nEngage with top-tier global enterprises and cutting-edge startups on international projects.\nEnjoy flexible work arrangements, allowing you to\nwork remotely\nor from modern offices and coworking spaces.\nAccelerate your professional growth through\ncareer paths\n,\nknowledge-sharing\ninitiatives,\nlanguage\nclasses, and sponsored\ntraining\nor\nconferences\n, including a partnership with\nDatabricks\n, which offers industry-leading training materials and certifications.\nChoose your preferred form of cooperation - B2B or a contract of mandate - and enjoy 20 fully paid days off.\nParticipate in\nteam-building events\nand utilize the\nintegration budget\n.\nCelebrate\nwork anniversaries, birthdays,\nand\nmilestones.\nAccess\nmedical\nand\nsports packages\n, eye care, and well-being support services, including psychotherapy and coaching.\nGet full work equipment for optimal productivity, including a laptop and other necessary devices.\nWith our backing, you can\nboost\nyour\npersonal brand\nby speaking at conferences, writing for our blog, or participating in meetups.\nExperience a smooth onboarding with a dedicated buddy, and start your journey in our friendly, supportive, and autonomous culture.",
-        "posted_at":null
-    },
-    {
         "title":"Junior Data Scientist",
         "company":"TheProtocol",
         "location":"Katowice",
@@ -423,10 +405,82 @@
         "posted_at":null
     },
     {
+        "title":"Data Scientist Internship",
+        "company":"TheProtocol",
+        "location":"Katowice",
+        "job_url":"https:\/\/theprotocol.it\/szczegoly\/praca\/data-scientist-internship-gdansk,oferta,c6730000-c1d3-82cb-a77e-08de80f79ba7?searchId=db02140d-60fb-4018-9a12-230080ac3670&sug=range_addon_listing_2&s=-6010952647",
+        "site":"TheProtocol",
+        "description":"",
+        "posted_at":null
+    },
+    {
+        "title":"🧩 Junior Python & AI Developer",
+        "company":"NFJ Listing",
+        "location":"Katowice",
+        "job_url":"https:\/\/nofluffjobs.com\/pl\/job\/junior-python-ai-developer-contelizer-remote",
+        "site":"NoFluffJobs",
+        "description":"Opis oferty\n🧩 Junior Python & AI Developer\n100% zdalnie | Easyitem.com\n💡 O projekcie\nRekrutacja prowadzona jest przez Contelizer Sp. z o.o. do projektu Easyitem.com — nowoczesnej platformy SaaS dla firm e-commerce, łączącej moduły PIM, OMS i WMS w jednym ekosystemie. Tworzymy rozwiązania, które automatyzują procesy sprzedaży, magazynowania i integracji z marketplace’ami.\nRozbudowujemy nasz system o zaawansowane moduły sztucznej inteligencji, dlatego szukamy osoby, która wesprze nas zarówno w rozwoju bazowej aplikacji, jak i w trenowaniu oraz wdrażaniu modeli AI\/ML opartych na rozwiązaniach open-source.\n🤖 Metody pracy i narzędzia AI\nNie piszemy wszystkiego od zera i cenimy nowoczesne podejście do programowania:\nAI na pokładzie:\nPrzy codziennym pisaniu kodu aktywnie korzystamy z asystenta\nClaude\n, a do researchu i rozwiązywania problemów używamy\nGemini Pro\n.\nOrganizacja:\nCodzienna komunikacja odbywa się w ekosystemie\nGoogle Workspace\n. Pracujemy w zwinnym środowisku (Agile\/Scrum), a zadania śledzimy za pomocą\nAsany\n.\nJakość i wiedza:\nStawiamy na Code Review, statyczną analizę kodu (Sentry), Pair Programming oraz budowanie bazy wiedzy (GitLab Wiki, Google Sheets).\n⚙️ Tech stack\nBackend:\nPython, FastAPI, Django REST Framework\nAI\/ML:\nPyTorch, TensorFlow, Hugging Face, LLM, Optuna\nAI Assistants:\nClaude, Gemini Pro\nDatabase:\nPostgreSQL\nTools:\nDocker Swarm, Portainer, Celery, Sentry, Grafana\nVersion control:\nGit (GitLab)\n💼 Co oferujemy\nPraca w\n100% zdalna\n(dowolne miejsce, elastyczne godziny).\nMałe zespoły\ni płaska struktura – co oznacza realny wpływ na rozwój produktu używanego przez firmy e-commerce z całej Polski.\nSzkolenia wewnętrzne\noraz możliwość nauki od doświadczonych developerów.\nKonkurencyjne wynagrodzenie uzależnione od umiejętności i zaangażowania.\nPrzyjazna atmosfera w zespole nastawionym na współpracę.",
+        "posted_at":null
+    },
+    {
+        "title":"Junior Data Engineer (Azure Data Factory)",
+        "company":"NFJ Listing",
+        "location":"Katowice",
+        "job_url":"https:\/\/nofluffjobs.com\/pl\/job\/junior-data-engineer-azure-data-factory-addepto-katowice-2",
+        "site":"NoFluffJobs",
+        "description":"Opis oferty\nOryginalny tekst.\nPokaż tłumaczenie\nAddepto is a leading AI consulting (addepto.com\/ai-consulting\/) and data engineering (addepto.com\/data-engineering-services\/) company that builds scalable, ROI-focused AI solutions for some of the world's largest enterprises and pioneering startups, including Rolls Royce, Continental, Porsche, ABB, and WGU. With an exclusive focus on Artificial Intelligence and Big Data, Addepto helps organizations unlock the full potential of their data through systems designed for measurable business impact and long-term growth.\nThe company's work extends beyond client engagements. Drawing from real-world challenges and insights, Addepto has developed its own product - ContextClue - and actively contributes open-source solutions to the AI community. This commitment to transforming practical experience into scalable innovation has earned Addepto recognition by Forbes as one of the top 10 AI consulting companies worldwide.\nAs part of KMS Technology, a US-based global technology group, Addepto combines deep AI specialization with enterprise-scale delivery capabilities—enabling the partnership to move clients from AI experimentation to production impact, securely and at scale.\nAs a\nJunior Data Engineer\n, you will have the opportunity to support and further develop an Azure-based data integration solution built primarily around Azure Data Factory (ADF). The current environment includes Azure Functions and ingestion components, but daily delivery is strongly centered on ADF pipeline design, orchestration, monitoring, and continuous improvement.\nThe project focuses on expanding and stabilizing the existing data platform, including the warehouse layer (Azure SQL Database or Synapse), optional dbt-based transformations, and occasional Power BI reporting support. You will work closely with the client-side Product Owner and Architect, proactively aligning business needs with technical implementation decisions and ensuring high-quality, scalable solutions. Additionally, you will contribute to Azure DevOps CI\/CD pipelines and release processes to maintain reliable deployments across environments.\nDiscover our perks and benefits:\nWork in a supportive team of passionate enthusiasts of AI & Big Data.\nEngage with top-tier global enterprises and cutting-edge startups on international projects.\nEnjoy flexible work arrangements, allowing you to\nwork remotely\nor from modern offices and coworking spaces.\nAccelerate your professional growth through\ncareer paths\n,\nknowledge-sharing\ninitiatives,\nlanguage\nclasses, and sponsored\ntraining\nor\nconferences\n, including a partnership with\nDatabricks\n, which offers industry-leading training materials and certifications.\nChoose your preferred form of cooperation -\nB2B\nor a contract of mandate - and enjoy\n20 fully paid days off.\nParticipate in\nteam-building events\nand utilize the\nintegration budget\n.\nCelebrate\nwork anniversaries, birthdays,\nand\nmilestones.\nAccess\nmedical\nand\nsports packages\n, eye care, and well-being support services, including psychotherapy and coaching.\nGet full work equipment for optimal productivity, including a laptop and other necessary devices.\nWith our backing, you can\nboost\nyour\npersonal brand\nby speaking at conferences, writing for our blog, or participating in meetups.",
+        "posted_at":null
+    },
+    {
+        "title":"Junior Data Engineer (Databricks)",
+        "company":"NFJ Listing",
+        "location":"Katowice",
+        "job_url":"https:\/\/nofluffjobs.com\/pl\/job\/junior-data-engineer-databricks-addepto-katowice-4",
+        "site":"NoFluffJobs",
+        "description":"Opis oferty\nOryginalny tekst.\nPokaż tłumaczenie\nAddepto is a leading AI consulting and data engineering company that builds scalable, ROI-focused AI solutions for some of the world’s largest enterprises and pioneering startups, including Rolls Royce, Continental, Porsche, ABB, and WGU. With our exclusive focus on Artificial Intelligence and Big Data, we help organizations unlock the full potential of their data through systems designed for measurable business impact and long-term growth.\nBeyond client projects, we have developed our own product offerings born from real-life client insights and challenges. We are also actively releasing open-source solutions to the community, transforming practical experience into tools that benefit the broader AI ecosystem. This commitment to scalable innovation, proven ROI delivery, and knowledge sharing has earned us recognition by Forbes as one of the top 10 AI consulting companies worldwide.\nAs a\nJunior\nData Engineer\n, you will have the exciting opportunity to work with a team of technology experts on challenging projects across various industries, leveraging cutting-edge technologies.  Here are some of the projects we are seeking talented individuals to join:\nDesign and development of a universal data platform for global aerospace companies.\nThis Azure and Databricks powered initiative combines diverse enterprise and public data sources. The data platform is at the early stages of the development, covering design of architecture and processes, as well as giving freedom for technology selection.\nData Platform Transformation for energy management association body.\nThis project addressed critical data management challenges, boosting user adoption, performance, and data integrity. The team is implementing a comprehensive data catalog, leveraging Databricks and Apache Spark\/PySpark, for simplified data access and governance. Secure integration solutions and enhanced data quality monitoring, utilizing Delta Live Table tests, established trust in the platform. The intermediate result is a user-friendly, secure, and data-driven platform, serving as a basis for further development of ML components.\nDesign of the data transformation and following data ops pipelines for global car manufacturer.\nThis project aims to build a data processing system for both real-time streaming and batch data. We’ll handle data for business uses like process monitoring, analysis, and reporting, while also exploring LLMs for chatbots and data analysis. Key tasks include data cleaning, normalization, and optimizing the data model for performance and accuracy.\nDiscover our perks and benefits:\nWork in a supportive team of passionate enthusiasts of AI & Big Data.\nEngage with top-tier global enterprises and cutting-edge startups on international projects.\nEnjoy flexible work arrangements, allowing you to\nwork remotely\nor from modern offices and coworking spaces.\nAccelerate your professional growth through\ncareer paths\n,\nknowledge-sharing\ninitiatives,\nlanguage\nclasses, and sponsored\ntraining\nor\nconferences\n, including a partnership with\nDatabricks\n, which offers industry-leading training materials and certifications.\nChoose your preferred form of cooperation - B2B or a contract of mandate - and enjoy 20 fully paid days off.\nParticipate in\nteam-building events\nand utilize the\nintegration budget\n.\nCelebrate\nwork anniversaries, birthdays,\nand\nmilestones.\nAccess\nmedical\nand\nsports packages\n, eye care, and well-being support services, including psychotherapy and coaching.\nGet full work equipment for optimal productivity, including a laptop and other necessary devices.\nWith our backing, you can\nboost\nyour\npersonal brand\nby speaking at conferences, writing for our blog, or participating in meetups.\nExperience a smooth onboarding with a dedicated buddy, and start your journey in our friendly, supportive, and autonomous culture.",
+        "posted_at":null
+    },
+    {
+        "title":"Junior+ Java Big Data Developer",
+        "company":"NFJ Listing",
+        "location":"Katowice",
+        "job_url":"https:\/\/nofluffjobs.com\/pl\/job\/junior-java-big-data-developer-comscore-via-cc-remote",
+        "site":"NoFluffJobs",
+        "description":"Opis oferty\nOryginalny tekst.\nPokaż tłumaczenie\nCorrect Context is looking for a\nJunior+ Java Big Data Developer\nfor Comscore in Poland and around.\nPlease note that this role starting date is Q1 2025. CV screenings should happen within a week or so, interviews might be scheduled in stages over next weeks as we progress. This approach allows us to give each candidate the attention they deserve, even if some interview rounds are spread out. We appreciate your patience as we work through this process and look forward to connecting soon!\nComscore is a global leader in media analytics, revolutionizing insights into consumer behavior, media consumption, and digital engagement.\nComscore leads in measuring and analyzing audiences across diverse digital platforms. Thrive on using cutting-edge technology, play a vital role as a trusted partner delivering accurate data to global businesses, and collaborate with industry leaders like Facebook, Disney, and Amazon. Contribute to empowering businesses in the digital era across media, advertising, e-commerce, and technology sectors.\nWe offer:\nReal big data projects, petabytes scale 🚀\nAn international team 🌎\nA small, independent team working environment 🧑‍💻\nFlexible work time ⏰\nFully remote or in-office work in Wroclaw, Poland 🏢\n8 000 PLN to 12 000 PLN net\/month B2B \/ UZ 💰\nMultikafeteria 🍽️\nFree parking 🚗\nThe recruitment process for the Java Developer position has following steps:\nTechnical survey ~ 10min\nTechnical screening - 30 min\nTechnical interview - 1h-2h\nIf you think you’re a good fit, but don’t meet all the qualifications, let’s talk!",
+        "posted_at":null
+    },
+    {
+        "title":"Junior Backend Developer (AI)",
+        "company":"TheProtocol",
+        "location":"Katowice",
+        "job_url":"https:\/\/theprotocol.it\/szczegoly\/praca\/junior-backend-developer-ai-warszawa,oferta,82880000-928a-d25f-3ccc-08de99ffb306?s=-6010952647&searchId=e336b80c-fea3-4be5-9b44-1fbed55a7946",
+        "site":"TheProtocol",
+        "description":"",
+        "posted_at":null
+    },
+    {
+        "title":"AI Software Engineering Intern",
+        "company":"TheProtocol",
+        "location":"Katowice",
+        "job_url":"https:\/\/theprotocol.it\/szczegoly\/praca\/ai-software-engineering-intern-katowice,oferta,78b50000-17ad-320c-048d-08de90c277db?s=-6010952647&searchId=e336b80c-fea3-4be5-9b44-1fbed55a7946",
+        "site":"TheProtocol",
+        "description":"",
+        "posted_at":null
+    },
+    {
+        "title":"Junior .NET Software Engineer - AI & R&D",
+        "company":"TheProtocol",
+        "location":"Katowice",
+        "job_url":"https:\/\/theprotocol.it\/szczegoly\/praca\/junior-net-software-engineer---ai-rd-katowice,oferta,04a20000-854a-dee6-f385-08de909212ef?s=-6010952647&searchId=e336b80c-fea3-4be5-9b44-1fbed55a7946",
+        "site":"TheProtocol",
+        "description":"",
+        "posted_at":null
+    },
+    {
         "title":"Specjalista \/ Specjalistka ds. Obserwacji Ziemi (ML\/DL)",
         "company":"TheProtocol",
         "location":"Katowice",
-        "job_url":"https:\/\/theprotocol.it\/szczegoly\/praca\/specjalista---specjalistka-ds-obserwacji-ziemi-ml-dl-wroclaw-jana-dlugosza-60,oferta,ac5d0000-0877-0acc-cf21-08de84c0599f?s=-6010952647&searchId=db02140d-60fb-4018-9a12-230080ac3670",
+        "job_url":"https:\/\/theprotocol.it\/szczegoly\/praca\/specjalista---specjalistka-ds-obserwacji-ziemi-ml-dl-wroclaw-jana-dlugosza-60,oferta,ac5d0000-0877-0acc-cf21-08de84c0599f?s=-6010952647&searchId=e336b80c-fea3-4be5-9b44-1fbed55a7946",
         "site":"TheProtocol",
         "description":"",
         "posted_at":null
@@ -435,16 +489,7 @@
         "title":"Junior ML Engineer",
         "company":"TheProtocol",
         "location":"Katowice",
-        "job_url":"https:\/\/theprotocol.it\/szczegoly\/praca\/junior-ml-engineer-warszawa-aleje-jerozolimskie-181b,oferta,61ad0000-f158-da3a-af4d-08de83683dc7?s=-6010952647&searchId=db02140d-60fb-4018-9a12-230080ac3670",
-        "site":"TheProtocol",
-        "description":"",
-        "posted_at":null
-    },
-    {
-        "title":"Data Scientist Internship",
-        "company":"TheProtocol",
-        "location":"Katowice",
-        "job_url":"https:\/\/theprotocol.it\/szczegoly\/praca\/data-scientist-internship-gdansk,oferta,c6730000-c1d3-82cb-a77e-08de80f79ba7?searchId=db02140d-60fb-4018-9a12-230080ac3670&sug=range_addon_listing_2&s=-6010952647",
+        "job_url":"https:\/\/theprotocol.it\/szczegoly\/praca\/junior-ml-engineer-warszawa-aleje-jerozolimskie-181b,oferta,61ad0000-f158-da3a-af4d-08de83683dc7?s=-6010952647&searchId=e336b80c-fea3-4be5-9b44-1fbed55a7946",
         "site":"TheProtocol",
         "description":"",
         "posted_at":null

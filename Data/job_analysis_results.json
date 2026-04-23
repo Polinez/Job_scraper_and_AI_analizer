@@ -939,5 +939,77 @@
             ],
             "advice": "Podkreśl swoją znajomość Azure i doświadczenie z LLM (LangChain), które są kluczowe w projektach Addepto. Warto uzupełnić profil o podstawy Apache Spark i Databricks, aby lepiej wpisać się w techniczne wymagania roli Data Engineer. Twoje osiągnięcia akademickie i staż w Łukasiewicz AI są silnymi atutami potwierdzającymi Twój potencjał rozwojowy."
         }
+    },
+    {
+        "company": "NFJ Listing",
+        "title": "🧩 Junior Python & AI Developer",
+        "url": "https://nofluffjobs.com/pl/job/junior-python-ai-developer-contelizer-remote",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 85,
+            "missing_skills": [
+                "PyTorch",
+                "Hugging Face",
+                "Docker / Docker Swarm",
+                "Celery",
+                "Optuna",
+                "PostgreSQL",
+                "Sentry",
+                "Grafana"
+            ],
+            "advice": "Twoje doświadczenie w FastAPI, Django oraz projektach NLP i Computer Vision czyni Cię bardzo silnym kandydatem na to stanowisko. W liście motywacyjnym podkreśl znajomość LangChain jako dowód biegłości w pracy z LLM oraz wspomnij o swoich osiągnięciach naukowych. Przed rozmową warto zapoznać się z podstawami Dockera oraz biblioteki PyTorch, aby uzupełnić luki w tech stacku."
+        }
+    },
+    {
+        "company": "NFJ Listing",
+        "title": "Junior Data Engineer (Azure Data Factory)",
+        "url": "https://nofluffjobs.com/pl/job/junior-data-engineer-azure-data-factory-addepto-katowice-2",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 48,
+            "missing_skills": [
+                "Azure Data Factory (ADF)",
+                "Azure Synapse Analytics",
+                "dbt (data build tool)",
+                "Power BI",
+                "Azure DevOps (CI/CD)",
+                "Projektowanie i orkiestracja rurociągów danych (ETL/ELT)"
+            ],
+            "advice": "Twoje doświadczenie w AI i znajomość Azure są cenne, ale oferta wymaga konkretnej wiedzy z zakresu inżynierii danych (ADF, dbt). Podkreśl w CV swoje umiejętności SQL oraz doświadczenie w przetwarzaniu danych z projektów NLP i Computer Vision. Ponieważ Addepto to firma doradcza AI, Twoje tło naukowe i techniczne może być silnym atutem mimo braków w narzędziach ETL."
+        }
+    },
+    {
+        "company": "NFJ Listing",
+        "title": "Junior Data Engineer (Databricks)",
+        "url": "https://nofluffjobs.com/pl/job/junior-data-engineer-databricks-addepto-katowice-4",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 68,
+            "missing_skills": [
+                "Databricks",
+                "Apache Spark / PySpark",
+                "Delta Live Tables",
+                "Data Ops",
+                "Modelowanie danych",
+                "Budowa potoków danych (ETL/ELT)"
+            ],
+            "advice": "Podkreśl swoją znajomość Azure i doświadczenie z LLM (LangChain), które są kluczowe w projektach Addepto. Warto uzupełnić profil o podstawy Apache Spark i Databricks, aby lepiej wpisać się w techniczne wymagania roli Data Engineer. Twoje osiągnięcia akademickie i staż w Łukasiewicz AI są silnymi atutami potwierdzającymi Twój potencjał rozwojowy."
+        }
+    },
+    {
+        "company": "NFJ Listing",
+        "title": "Junior+ Java Big Data Developer",
+        "url": "https://nofluffjobs.com/pl/job/junior-java-big-data-developer-comscore-via-cc-remote",
+        "location": "Katowice",
+        "analysis": {
+            "match_score": 40,
+            "missing_skills": [
+                "Java",
+                "Big Data frameworks (np. Spark, Hadoop, Flink)",
+                "Doświadczenie w pracy z danymi w skali petabajtów",
+                "Programowanie obiektowe w ekosystemie Java"
+            ],
+            "advice": "Twoje doświadczenie koncentruje się na Pythonie i AI, podczas gdy oferta wymaga biegłości w Javie i inżynierii danych. Jeśli chcesz aplikować, podkreśl swoje umiejętności w SQL i backendzie oraz gotowość do szybkiej nauki Javy. Wykorzystaj fakt, że firma dopuszcza kandydatów niespełniających wszystkich wymagań."
+        }
     }
 ]
