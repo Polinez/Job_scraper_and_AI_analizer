@@ -101,6 +101,17 @@ def _process_job_list(all_jobs: list) -> pd.DataFrame:
     if 'job_url' in df.columns:
         df = df.drop_duplicates(subset=['job_url'])
 
+    # Advanced duplicate removal based on title and company name
+    if 'title' in df.columns and 'company' in df.columns:
+        df['title_norm'] = df['title'].astype(str).str.lower().str.strip()
+        df['company_norm'] = df['company'].astype(str).str.lower().str.strip()
+
+        # We remove duplicates, keeping only the first occurrence of each pair (title + company)
+        df = df.drop_duplicates(subset=['title_norm', 'company_norm'], keep='first')
+
+        # We remove auxiliary columns so they don't clutter the final data
+        df = df.drop(columns=['title_norm', 'company_norm'])
+
     return df
 
 
