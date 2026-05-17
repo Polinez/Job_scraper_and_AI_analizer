@@ -1,11 +1,11 @@
 {
   "cv_path_win": "C:\\Users\\Sebastian\\Desktop\\SynologyDrive\\praca\\CVANG\\SebastianWandzel.pdf",
-  "cv_path_mac": "/Users/sebastian/Desktop/praca/SebastianWandzel.pdf",
+  "cv_path_mac": "/Users/sebastian/Desktop/praca/CVANG/SebastianWandzel.pdf",
   "job_titles": ["Data Scientist", "Data Engineer", "Machine Learning", "Deep Learning", "NLP", "Artificial Intelligence",
     "GenAI", "Big Data", "Python Developer", "ML", "AI", "Data Analyst", "Data Analysis", "Analityk Danych",
     "Computer Vision Engineer", "CV Engineer", "NLP Engineer", "Inżynier AI", "AI Developer",
     "Machine Learning Engineer", "ML Engineer", "Prompt Engineer"],
-  "model_name": "gemini-3-flash-preview",
+  "model_name": "gemini-3.1-flash-lite",
   "experience_levels": ["Junior", "Intern", "Staż", "Trainee", "Młodszy", "Praktyka", "Asystent", "Graduate", "Specjalista", "Specjalistka", "Stażysta", "Stażystka","Student","Entry Level","Entry","Praktykant","Praktykantka","Apprentice"],
   "exclude_keywords": ["Senior"],
   "location": "Katowice",
